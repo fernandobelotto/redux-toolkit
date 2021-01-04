@@ -10,7 +10,7 @@
     "Referência de API": [
       {
         "type": "category",
-        "label": "Store Setup",
+        "label": "Configuração da Store",
         "collapsed": false,
         "items": [
           "api/configureStore",
@@ -21,7 +21,7 @@
       },
       {
         "type": "category",
-        "label": "Reducers and Actions",
+        "label": "Reducers e Actions",
         "collapsed": false,
         "items": [
           "api/createReducer",
@@ -33,7 +33,7 @@
       },
       {
         "type": "category",
-        "label": "Other",
+        "label": "Outros",
         "collapsed": false,
         "items": [
           "api/createSelector",

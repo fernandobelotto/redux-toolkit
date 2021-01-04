@@ -283,4 +283,4 @@ Aqui está o exemplo completo em uma sandbox:
      sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
 ></iframe>
 
-Agora que você conhece os princípios básicos de cada função, a próxima etapa é tentar usá-los em um exemplo _um pouco_ maior para ver mais como eles funcionam. Abordaremos isso no [Tutorial intermediário](./intermediário-tutorial.md).
+Agora que você conhece os princípios básicos de cada função, a próxima etapa é tentar usá-los em um exemplo _um pouco_ maior para ver mais como eles funcionam. Abordaremos isso no [Tutorial intermediário](./intermediate-tutorial.md).

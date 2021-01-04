@@ -1,11 +1,11 @@
 ---
 id: usage-with-typescript
-title: Usage With TypeScript
-sidebar_label: Usage With TypeScript
+title: Uso com TypeScript
+sidebar_label: Uso com TypeScript
 hide_title: true
 ---
 
-# Usage With TypeScript
+# Uso com TypeScript
 
 Redux Toolkit is written in TypeScript, and its API is designed to enable great integration with TypeScript applications.
 

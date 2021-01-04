@@ -64,12 +64,13 @@ module.exports = {
     ]
   ],
   projectName: 'redux-toolkit',
-  baseUrl: '/',
+  organizationName: 'fernandobelotto',
+  baseUrl: '/redux-toolkit/',
   favicon: 'img/favicon/favicon.ico',
   tagline:
     'O conjunto de ferramentas oficial, opinativo, com baterias incluídas para o desenvolvimento Redux eficiente',
   title: 'Redux Toolkit',
-  url: 'https://redux-toolkit.js.org',
+  url: 'https://fernandobelotto.github.io',
   customFields: {
     repoUrl: 'https://github.com/reduxjs/redux-toolkit'
   },

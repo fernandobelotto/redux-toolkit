@@ -67,7 +67,7 @@ module.exports = {
   baseUrl: '/',
   favicon: 'img/favicon/favicon.ico',
   tagline:
-    'The official, opinionated, batteries-included toolset for efficient Redux development',
+    'O conjunto de ferramentas oficial, opinativo, com baterias incluídas para o desenvolvimento Redux eficiente',
   title: 'Redux Toolkit',
   url: 'https://redux-toolkit.js.org',
   customFields: {
@@ -88,7 +88,7 @@ module.exports = {
       items: [
         {
           to: 'introduction/quick-start',
-          label: 'Quick Start',
+          label: 'Começo rápido',
           position: 'right'
         },
         { to: 'api/configureStore', label: 'API', position: 'right' },
@@ -110,17 +110,17 @@ module.exports = {
           title: 'Docs',
           items: [
             {
-              label: 'Quick Start',
+              label: 'Começo rápido',
               to: 'introduction/quick-start'
             },
             {
-              label: 'API Reference',
+              label: 'Referência de API',
               to: 'api/configureStore'
             }
           ]
         },
         {
-          title: 'Community',
+          title: 'Comunidade',
           items: [
             {
               label: 'Stack Overflow',
@@ -133,7 +133,7 @@ module.exports = {
           ]
         },
         {
-          title: 'More',
+          title: 'Mais',
           items: [
             {
               label: 'GitHub',
@@ -152,7 +152,7 @@ module.exports = {
           ]
         }
       ],
-      copyright: `Copyright © 2015–${new Date().getFullYear()} Dan Abramov and the Redux documentation authors.`
+      copyright: `Direito autoral © 2015–${new Date().getFullYear()} Dan Abramov and the Redux documentation authors.`
     },
     image: 'img/redux-logo-landscape.png',
     navbar: {
@@ -164,7 +164,7 @@ module.exports = {
       items: [
         {
           to: 'introduction/quick-start',
-          label: 'Quick Start',
+          label: 'Começo rápido',
           position: 'right'
         },
         { to: 'api/configureStore', label: 'API', position: 'right' },

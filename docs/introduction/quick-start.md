@@ -1,13 +1,13 @@
 ---
 id: quick-start
-title: Quick Start
-sidebar_label: Quick Start
+title: Início Rápido
+sidebar_label: Início Rápido
 hide_title: true
 ---
 
-# Quick Start
+# Início Rápido
 
-## Purpose
+## Propósito
 
 The **Redux Toolkit** package is intended to be the standard way to write Redux logic. It was originally created to help address three common concerns about Redux:
 

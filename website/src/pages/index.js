@@ -29,9 +29,9 @@ const features = [
   {
     content: (
       <p>
-        Provides <strong>good defaults for store setup out of the box</strong>,
-        and includes{' '}
-        <strong>the most commonly used Redux addons built-in</strong>.
+        Fornece <strong>bons padrões para a configuração da loja fora da caixa</strong>,
+        e inclui{' '}
+        <strong>os complementos integrados do Redux mais comumente usados</strong>.
       </p>
     ),
     image: (
@@ -41,14 +41,14 @@ const features = [
       </svg>
     ),
     imageAlign: 'top',
-    title: 'Opinionated',
+    title: 'Opinativo',
   },
   {
     content: (
       <p>
-        Takes inspiration from libraries like Immer and Autodux to let you{' '}
-        <strong>write "mutative" immutable update logic</strong>, and even{' '}
-        <strong>create entire "slices" of state automatically</strong>.
+        Inspira-se em bibliotecas como Immer e Autodux para permitir que você{' '}
+        <strong>escrever lógica de atualização imutável "mutativa"</strong>, e até mesmo{' '}
+        <strong>criar "fatias" inteiras de estado automaticamente</strong>.
       </p>
     ),
     image: (
@@ -67,13 +67,13 @@ const features = [
       </svg>
     ),
     imageAlign: 'top',
-    title: 'Powerful',
+    title: 'Poderoso',
   },
   {
     content: (
       <p>
-        Lets you focus on the core logic your app needs, so you can{' '}
-        <strong>do more work with less code</strong>.
+        Permite que você se concentre na lógica central de que seu aplicativo precisa, para que você possa{' '}
+        <strong>faça mais trabalho com menos código</strong>.
       </p>
     ),
     image: (
@@ -82,13 +82,13 @@ const features = [
       </svg>
     ),
     imageAlign: 'top',
-    title: 'Effective',
+    title: 'Eficaz',
   },
 ]
 
 const otherLibraries = [
   {
-    content: 'A predictable state container for JavaScript applications',
+    content: 'Um contêiner de estado previsível para aplicativos JavaScript',
     title: 'Redux',
     link: 'https://redux.js.org',
     image: (
@@ -104,7 +104,7 @@ const otherLibraries = [
     ),
   },
   {
-    content: 'Official React bindings for Redux',
+    content: 'Ligações oficiais do React para Redux',
     title: 'React-Redux',
     link: 'https://react-redux.js.org',
     image: (
@@ -149,7 +149,7 @@ function Home() {
               )}
               to={useBaseUrl('introduction/quick-start')}
             >
-              Get Started
+              Comece Agora
             </Link>
           </div>
         </div>
@@ -182,7 +182,7 @@ function Home() {
               <div className="row">
                 <div className="col">
                   <h2 className={`text--center ${styles.secondTitle}`}>
-                    Other Libraries from the Redux Team
+                    Outras bibliotecas da equipe do Redux
                   </h2>
                 </div>
               </div>

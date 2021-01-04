@@ -13,11 +13,11 @@ Este tutorial presume que você já esteja familiarizado com os conceitos da bib
 
 ## Introdução: Escrevendo um aplicativo contador
 
-We'll start by looking at the smallest Redux example: a simple counter application.
+Começaremos examinando o menor exemplo do Redux: um aplicativo de contador simples.
 
 ### Redux "Counter-Vanilla" Example
 
-The Redux docs have a ["counter-vanilla" example](https://redux.js.org/introduction/examples#counter-vanilla) that shows how to create a simple Redux store with a reducer that stores a single number and responds to `"INCREMENT"` and `"DECREMENT"` action types. You can see the [the complete code as a CodeSandbox here](https://codesandbox.io/s/github/reduxjs/redux/tree/master/examples/counter-vanilla), but here's the important section:
+Os documentos do Redux têm um [exemplo "counter-vanilla"](https://redux.js.org/introduction/examples#counter-vanilla) que mostra como criar uma Redux store simples com um redutor que armazena um único número e responde aos tipos de ação `"INCREMENTO"` e `"REDUÇÃO"`. Você pode ver o [o código completo no CodeSandbox aqui](https://codesandbox.io/s/github/reduxjs/redux/tree/master/examples/counter-vanilla), mas aqui está a seção importante:
 
 ```js
 function counter(state, action) {
@@ -43,12 +43,13 @@ document.getElementById('increment').addEventListener('click', function() {
 ```
 
 This section creates a reducer function called `counter`, ensures it uses a default state value of `0`, listens for `"INCREMENT"` and `"DECREMENT"` action types, and dispatches the `"INCREMENT"` action type when the button is clicked.
+Esta seção cria uma função reducer chamada `counter`, garante que ele use um valor de estado padrão de `0`, escuta os tipos de action `"INCREMENTO"` e `"DECREMENTO"` e despacha o tipo de action `"INCREMENTO "` quando o botão é clicado.
 
-### A More Typical Counter Example
+### Um exemplo de contador mais típico
 
-While this example is simple, it's also somewhat unrealistic. Most Redux apps are written using ES6 syntax, including default arguments for function parameters that are undefined. It's also common practice to write ["action creator" functions](https://redux.js.org/basics/actions#action-creators) instead of writing the action objects directly in the code, and to write out the action types as constants instead of plain strings each time.
+Embora este exemplo seja simples, também é um tanto irreal. A maioria dos aplicativos Redux são escritos usando a sintaxe ES6, incluindo argumentos padrão para parâmetros de função que são indefinidos. Também é uma prática comum escrever [funções action creators](https://redux.js.org/basics/actions#action-creators) em vez de escrever os objetos de action diretamente no código e escrever os tipos de action como constantes em vez de strings simples a cada vez.
 
-Let's rewrite the above example using those approaches to see what it would look like:
+Vamos reescrever o exemplo acima usando essas abordagens para ver como ficaria:
 
 ```js
 const INCREMENT = 'INCREMENT'
@@ -80,38 +81,38 @@ document.getElementById('increment').addEventListener('click', () => {
 })
 ```
 
-Since the example is small, that doesn't make too much of a difference in appearance. Size-wise, we saved a couple lines by using a default argument, but writing those action creator functions made things bigger. And, there's some duplication here. Writing `const INCREMENT = 'INCREMENT'` just looks silly :) Especially when it's only being used in two places - the action creator and the reducer.
+Como o exemplo é pequeno, isso não faz muita diferença na aparência. Em relação ao tamanho, salvamos algumas linhas usando um argumento padrão, mas escrever essas funções action creator tornou as coisas maiores. E, há alguma duplicação aqui. Escrever `const INCREMENT = 'INCREMENT'` parece bobo :) Especialmente quando está sendo usado apenas em dois lugares - o action creator e o reducer.
 
-In addition, switch statements bother many people. It would be nice if we could replace it with some kind of a lookup table instead.
+Além disso, as declarações switch incomodam muitas pessoas. Seria bom se pudéssemos substituí-lo por algum tipo de tabela de consulta.
 
-### Introducing: `configureStore`
+### Apresentando: `configureStore`
 
-Redux Toolkit includes several functions to help simplify your Redux code. The first function we'll look at is [`configureStore`](../api/configureStore.mdx).
+O Redux Toolkit inclui várias funções para ajudar a simplificar seu código Redux. A primeira função que veremos é [`configureStore`](../api/configureStore.mdx).
 
-Normally, you create a Redux store by calling `createStore()` and passing in your root reducer function. Redux Toolkit has a `configureStore()` function that wraps `createStore()` to do the same thing, but also sets up some useful development tools for you as part of the store creation process.
+Normalmente, você cria uma Redux store chamando `createStore()` e passando sua função reducer raiz. O Redux Toolkit possui uma função `configureStore()` que envolve `createStore()` para fazer a mesma coisa, mas também configura algumas ferramentas de desenvolvimento úteis para você como parte do processo de criação da store.
 
-We can easily replace the existing `createStore` call with `configureStore` instead. `configureStore` accepts a single object with named fields, instead of multiple function arguments, so we need to pass our reducer function as a field named `reducer`:
+Podemos facilmente substituir a chamada `createStore` existente por `configureStore`. `configureStore` aceita um único objeto com campos nomeados, em vez de vários argumentos de função, então precisamos passar nossa função redutora como um campo denominado `reducer`:
 
 ```js
-// Before:
+// Antes:
 const store = createStore(counter)
 
-// After:
+// Depois:
 const store = configureStore({
   reducer: counter
 })
 ```
 
-This probably doesn't look like much is different. But, under the hood, the store has been configured to enable using the [Redux DevTools Extension](https://github.com/zalmoxisus/redux-devtools-extension) to view the history of dispatched actions and how the store state changed, and has had [some Redux middleware included by default](../api/getDefaultMiddleware.mdx). We'll look at these in more detail in the next tutorial.
+Isso provavelmente não parece muito diferente. Mas, sob os panos, a store foi configurada para permitir o uso da [Redux DevTools Extension](https://github.com/zalmoxisus/redux-devtools-extension) para visualizar o histórico de actions despachadas e como o estado da store mudou, e teve [algum middleware Redux incluído por padrão](../api/getDefaultMiddleware.mdx). Veremos isso com mais detalhes no próximo tutorial.
 
-### Introducing: `createAction`
+### Apresentando: `createAction`
 
-Next up, let's look at [`createAction`](../api/createAction.mdx).
+A seguir, vamos dar uma olhada na [`createAction`](../api/createAction.mdx).
 
-`createAction` accepts an action type string as an argument, and returns an action creator function that uses that type string. (Yes, this means the name is a bit incorrect - we're creating an "action creator function", not an "action object", but it's shorter and easier to remember than `createActionCreator`.) So, these two examples are equivalent:
+`createAction` aceita uma string de tipo de action como um argumento e retorna uma função action creator que usa essa string de tipo. (Sim, isso significa que o nome está um pouco incorreto - estamos criando uma "função action creator", não um "objeto de action", mas é mais curto e fácil de lembrar do que `createActionCreator`.) Portanto, esses dois exemplos são equivalentes :
 
 ```js
-// Original approach: write the action type and action creator by hand
+// Abordagem original: escreva o tipo de action e o action creator manualmente
 const INCREMENT = 'INCREMENT'
 
 function incrementOriginal() {
@@ -121,14 +122,14 @@ function incrementOriginal() {
 console.log(incrementOriginal())
 // {type: "INCREMENT"}
 
-// Or, use `createAction` to generate the action creator:
+// Ou use `createAction` para gerar o action creator:
 const incrementNew = createAction('INCREMENT')
 
 console.log(incrementNew())
 // {type: "INCREMENT"}
 ```
 
-But what if we need to reference the action type string in a reducer? With `createAction`, you can do that in two ways. First, the action creator's `toString()` method has been overridden, and will return the action type string. Second, the type string is also available as a `.type` field on the function:
+Mas e se precisarmos fazer referência à string do tipo de action em um reducer? Com `createAction`, você pode fazer isso de duas maneiras. Primeiro, o método `toString()` do action creator foi sobrescrito e retornará a string do tipo de action. Em segundo lugar, a string de tipo também está disponível como um campo `.type` na função:
 
 ```js
 const increment = createAction('INCREMENT')
@@ -140,7 +141,7 @@ console.log(increment.type)
 // "INCREMENT"
 ```
 
-We can use `createAction` to simplify the previous counter example.
+Podemos usar `createAction` para simplificar o exemplo de contador anterior.
 
 ```js
 const increment = createAction('INCREMENT')
@@ -166,13 +167,13 @@ document.getElementById('increment').addEventListener('click', () => {
 })
 ```
 
-That saved us a few lines again, and at least we're not repeating the word `INCREMENT` everywhere.
+Isso nos salvou algumas linhas novamente, e pelo menos não estamos repetindo a palavra `INCREMENTO` em todos os lugares.
 
-### Introducing: `createReducer`
+### Apresentando: `createReducer`
 
-Now, let's look at the reducer function. While you can use any conditional logic you want in a Redux reducer, including `if` statements and loops, the most common approach is to check the `action.type` field and do some specific logic for each action type. A reducer will also provide an initial state value, and return the existing state if the action isn't something it cares about.
+Agora, vamos examinar a função reducer. Embora você possa usar qualquer lógica condicional que desejar em um reducer Redux, incluindo instruções `if` e loops, a abordagem mais comum é verificar o campo `action.type` e fazer alguma lógica específica para cada tipo de action. Um reducer também fornecerá um valor de estado inicial e retornará o estado existente se a action não for algo importante.
 
-Redux Toolkit includes a [`createReducer` function](../api/createReducer.mdx) that lets you write reducers using a "lookup table" object, where each key in the object is a Redux action type string, and the values are reducer functions. We can use it to directly replace the existing `counter` function definition. Since we need to use the action type strings as the keys, we can use the [ES6 object "computed property" syntax](http://javascript.info/object#computed-properties) to create keys from the type string variables.
+O Redux Toolkit inclui a [função `createReducer`](../api/createReducer.mdx) que permite escrever reducers usando um objeto "lookup table", onde cada chave no objeto é uma string do tipo de action, e os valores são funções reducers. Podemos usá-lo para substituir diretamente a definição da função `contador` existente. Uma vez que precisamos usar strings de tipo de action como as chaves, podemos usar a sintaxe [ES6 object "computed property"](http://javascript.info/object#computed-properties) para criar chaves a partir das variáveis ​​de string de tipo.
 
 ```js
 const increment = createAction('INCREMENT')
@@ -184,7 +185,7 @@ const counter = createReducer(0, {
 })
 ```
 
-Or, since the computed properties syntax will call `toString()` on whatever variable is inside, we can just use the action creator functions directly without the `.type` field:
+Ou, uma vez que a sintaxe das propriedades computadas chamará `toString()` em qualquer variável que esteja dentro, podemos apenas usar as funções action creators diretamente sem o campo `.type`:
 
 ```js
 const counter = createReducer(0, {
@@ -193,11 +194,11 @@ const counter = createReducer(0, {
 })
 ```
 
-To see the complete code so far, see [this CodeSandbox showing the use of `createAction` and `createReducer`](https://codesandbox.io/s/counter-vanilla-redux-toolkit-sjouq).
+Para ver o código completo até agora, veja [este CodeSandbox mostrando o uso de `createAction` e `createReducer`](https://codesandbox.io/s/counter-vanilla-redux-toolkit-sjouq).
 
-### Introducing: `createSlice`
+### Apresentando: `createSlice`
 
-Let's review what the counter example looks like at this point:
+Vamos revisar a aparência do exemplo do contador neste ponto:
 
 ```js
 const increment = createAction('INCREMENT')
@@ -217,13 +218,13 @@ document.getElementById('increment').addEventListener('click', () => {
 })
 ```
 
-That's not bad, but we can make one more major change to this. Why do we even need to generate the action creators separately, or write out those action type strings? The really important part here is the reducer functions.
+Isso não é ruim, mas podemos fazer mais uma mudança importante nisso. Por que precisamos gerar os action creators separadamente ou escrever essas strings de tipo de action? A parte realmente importante aqui são as funções do reducer.
 
-That's where the [`createSlice` function](../api/createSlice.mdx) comes in. It allows us to provide an object with the reducer functions, and it will automatically generate the action type strings and action creator functions based on the names of the reducers we listed.
+É aí que entra a função [`createSlice`](../api/createSlice.mdx). Ela nos permite fornecer a um objeto as funções reducers e irá gerar automaticamente as strings de tipo de action e funções action creators com base nos nomes dos reducers listados.
 
-`createSlice` returns a "slice" object that contains the generated reducer function as a field named `reducer`, and the generated action creators inside an object called `actions`.
+`createSlice` retorna um objeto "slice" que contém a função reducer gerada como um campo denominado `redutor` e os action creators gerados dentro de um objeto denominado `actions`.
 
-Here's what our counter example would look like using `createSlice` instead:
+Aqui está como nosso exemplo de contador ficaria usando `createSlice` em vez disso:
 
 ```js
 const counterSlice = createSlice({
@@ -244,25 +245,25 @@ document.getElementById('increment').addEventListener('click', () => {
 })
 ```
 
-Most of the time, you'll probably want to use ES6 destructuring syntax to pull out the action creator functions as variables, and possibly the reducer as well:
+Na maioria das vezes, você provavelmente desejará usar a sintaxe de desestruturação do ES6 para extrair as funções do action creator como variáveis ​​e, possivelmente, o reducer também:
 
 ```js
 const { actions, reducer } = counterSlice
 const { increment, decrement } = actions
 ```
 
-## Summary
+## Resumo
 
-Let's recap what the functions do:
+Vamos recapitular o que as funções fazem:
 
-- `configureStore`: creates a Redux store instance like the original `createStore` from Redux, but accepts a named options object and sets up the Redux DevTools Extension automatically
-- `createAction`: accepts an action type string, and returns an action creator function that uses that type
-- `createReducer`: accepts an initial state value and a lookup table of action types to reducer functions, and creates a reducer that handles all of those action types
-- `createSlice`: accepts an initial state and a lookup table with reducer names and functions, and automatically generates action creator functions, action type strings, and a reducer function.
+- `configureStore`: cria uma instância de Redux store como o `createStore` original do Redux, mas aceita um objeto de opções nomeado e configura a extensão Redux DevTools automaticamente
+- `createAction`: aceita uma string de tipo de action e retorna uma função action creator que usa esse tipo
+- `createReducer`: aceita um valor de estado inicial e uma tabela de pesquisa de tipos de action para funções reducers e cria um reducer que lida com todos esses tipos de action
+- `createSlice`: aceita um estado inicial e uma tabela de pesquisa com nomes e funções reducers e gera automaticamente funções action creators, strings de tipo de action e uma função reducer.
 
-Notice that none of these changed anything about how Redux works. We're still creating a Redux store, dispatching action objects that describe "what happened", and returning updated state using a reducer function. Also, notice that the Redux Toolkit functions can be used no matter what approach was used to build the UI, since they just handle the "plain Redux store" part of the code. Our example used the store with a "vanilla JS" UI, but we could use this same store with React, Angular, Vue, or any other UI layer.
+Observe que nada disso mudou nada sobre o funcionamento do Redux. Ainda estamos criando uma Redux store, despachando objetos de action que descrevem "o que aconteceu" e retornando o estado atualizado usando uma função reducer. Além disso, observe que as funções do Redux Toolkit podem ser usadas independentemente de qual abordagem foi usada para construir a UI, uma vez que elas apenas lidam com a parte do código "simples Redux store". Nosso exemplo usou a store com uma IU "vanilla JS", mas poderíamos usar essa mesma store com React, Angular, Vue ou qualquer outra camada de IU.
 
-Finally, if you look carefully at the example, you'll see that there's one place where we've written some async logic - the "increment async" button:
+Finalmente, se você olhar cuidadosamente para o exemplo, verá que há um lugar onde escrevemos alguma lógica assíncrona - o botão "incrementar assíncrono":
 
 ```js
 document.getElementById('incrementAsync').addEventListener('click', function() {
@@ -271,10 +272,9 @@ document.getElementById('incrementAsync').addEventListener('click', function() {
   }, 1000)
 })
 ```
+Você pode ver que estamos mantendo o tratamento assíncrono separado da lógica do reducer e despachamos uma action quando o armazenamento precisa ser atualizado. Redux Toolkit não muda nada sobre isso.
 
-You can see that we're keeping the async handling separate from the reducer logic, and we dispatch an action when the store needs to be updated. Redux Toolkit doesn't change anything about that.
-
-Here's the complete example in a sandbox:
+Aqui está o exemplo completo em uma sandbox:
 
 <iframe src="https://codesandbox.io/embed/counter-vanilla-createslice-redux-toolkit-6gkxx?fontsize=14&hidenavigation=1&theme=dark&view=editor"
      style={{ width: '100%', height: '500px', border: 0, borderRadius: '4px', overflow: 'hidden' }} 
@@ -283,4 +283,4 @@ Here's the complete example in a sandbox:
      sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
 ></iframe>
 
-Now that you know the basics of each function, the next step is to try using them in a _slightly_ larger example to see more of how they work. We'll cover that in the [Intermediate Tutorial](./intermediate-tutorial.md).
+Agora que você conhece os princípios básicos de cada função, a próxima etapa é tentar usá-los em um exemplo _um pouco_ maior para ver mais como eles funcionam. Abordaremos isso no [Tutorial intermediário](./intermediário-tutorial.md).

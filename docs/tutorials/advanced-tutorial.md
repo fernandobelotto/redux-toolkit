@@ -5,7 +5,7 @@ sidebar_label: Advanced Tutorial
 hide_title: true
 ---
 
-# Advanced Tutorial: Redux Toolkit in Practice
+# Tutorial avançado: Redux Toolkit na prática
 
 In the [Intermediate Tutorial](./intermediate-tutorial.md), you saw how to use Redux Toolkit in a typical basic React app, as well as how to convert some existing plain Redux code to use RTK instead. You also saw how to write "mutative" immutable updates in reducer functions, and how to write a "prepare callback" to generate an action payload.
 

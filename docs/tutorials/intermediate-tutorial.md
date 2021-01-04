@@ -5,7 +5,7 @@ sidebar_label: Intermediate Tutorial
 hide_title: true
 ---
 
-# Intermediate Tutorial: Redux Toolkit in Action
+# Tutorial intermediário: Redux Toolkit em ação
 
 In the [Basic Tutorial](./basic-tutorial.md), you saw the main API functions that are included in Redux Toolkit, and some short examples of why and how to use them. You also saw that you can use Redux and RTK from a plain JS script tag in an HTML page, without using React, NPM, Webpack, or any build tools.
 

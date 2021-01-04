@@ -7,25 +7,25 @@ hide_title: true
 
 # Tutorial intermediário: Redux Toolkit em ação
 
-In the [Basic Tutorial](./basic-tutorial.md), you saw the main API functions that are included in Redux Toolkit, and some short examples of why and how to use them. You also saw that you can use Redux and RTK from a plain JS script tag in an HTML page, without using React, NPM, Webpack, or any build tools.
+No [Tutorial básico](./basic-tutorial.md), você viu as principais funções da API que estão incluídas no Redux Toolkit e alguns exemplos curtos de por que e como usá-las. Você também viu que pode usar Redux e RTK a partir de uma tag de script JS simples em uma página HTML, sem usar React, NPM, Webpack ou quaisquer ferramentas de build.
 
-In this tutorial, you'll see how to use those APIs in a small React app. Specifically, we're going to convert the [original Redux "todos" example app](https://redux.js.org/introduction/examples#todos) to use RTK instead.
+Neste tutorial, você verá como usar essas APIs em um pequeno aplicativo React. Especificamente, vamos converter o [aplicativo de exemplo "todos" original do Redux](https://redux.js.org/introduction/examples#todos) para usar RTK.
 
-This will show several concepts:
+Isso mostrará vários conceitos:
 
-- How to convert "plain Redux" code to use RTK
-- How to use RTK in a typical React+Redux app
-- How some of the more powerful features of RTK can be used to simplify your Redux code
+- Como converter o código "Redux simples" para usar RTK
+- Como usar RTK em um aplicativo React + Redux típico
+- Como alguns dos recursos mais poderosos do RTK podem ser usados ​​para simplificar seu código Redux
 
-Also, while this isn't specific to RTK, we'll look at a couple ways you can improve your React-Redux code as well.
+Além disso, embora isso não seja específico do RTK, veremos algumas maneiras de melhorar seu código React-Redux também.
 
-The complete source code for the converted application from this tutorial is available at [github.com/reduxjs/rtk-convert-todos-example](https://github.com/reduxjs/rtk-convert-todos-example). We'll be walking through the conversion process as shown in this repo's history. Links to meaningful individual commits will be highlighted in quote blocks, like this:
+O código-fonte completo para o aplicativo convertido deste tutorial está disponível em [github.com/reduxjs/rtk-convert-todos-example](https://github.com/reduxjs/rtk-convert-todos-example). Percorreremos o processo de conversão, conforme mostrado no histórico deste repo. Links para commits individuais significativos serão destacados em blocos de citações, como este:
 
 > - Commit message here
 
-## Reviewing the Redux Todos Example
+## Revisando o exemplo Redux Todos
 
-If we inspect [the current "todos" example source code](https://github.com/reduxjs/redux/tree/9c9a4d2a1c62c9dbddcbb05488f8bd77d24c81de/examples/todos/src), we can observe a few things:
+Se inspecionarmos [o código-fonte de exemplo "todos" atual](https://github.com/reduxjs/redux/tree/9c9a4d2a1c62c9dbddcbb05488f8bd77d24c81de/examples/todos/src), podemos observar algumas coisas:
 
 - The [`todos` reducer function](https://github.com/reduxjs/redux/blob/9c9a4d2a1c62c9dbddcbb05488f8bd77d24c81de/examples/todos/src/reducers/todos.js) is doing immutable updates "by hand", by copying nested JS objects and arrays
 - The [`actions` file](https://github.com/reduxjs/redux/blob/9c9a4d2a1c62c9dbddcbb05488f8bd77d24c81de/examples/todos/src/actions/index.js) has hand-written action creator functions, and the action type strings are being duplicated between the actions file and the reducer files
@@ -33,40 +33,41 @@ If we inspect [the current "todos" example source code](https://github.com/redux
 - The React components are written using a strict version of the ["container/presentational" pattern](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0), where [the "presentational" components are in one folder](https://github.com/reduxjs/redux/tree/9c9a4d2a1c62c9dbddcbb05488f8bd77d24c81de/examples/todos/src/components), and the [Redux "container" connection definitions are in a different folder](https://github.com/reduxjs/redux/tree/9c9a4d2a1c62c9dbddcbb05488f8bd77d24c81de/examples/todos/src/containers)
 - Some of the code isn't following some of the recommended Redux "best practices" patterns. We'll look at some specific examples as we go through this tutorial.
 
-On the one hand, this is a small example app. It's meant to illustrate the basics of actually using React and Redux together, and not necessarily be used as "the right way" to do things in a full-scale production application. On the other hand, most people will use patterns they see in docs and examples, and there's definitely room for improvement here.
+Por um lado, este é um pequeno aplicativo de exemplo. O objetivo é ilustrar os fundamentos do uso real de React e Redux juntos, e não necessariamente ser usado como "a maneira certa" de fazer as coisas em um aplicativo de produção em escala real. Por outro lado, a maioria das pessoas usará os padrões que vêem em documentos e exemplos e, definitivamente, há espaço para melhorias aqui.
 
-## Initial Conversion Steps
+## Etapas de conversão inicial
 
-### Adding Redux Toolkit to the Project
+### Adicionando Redux Toolkit ao projeto
 
-Since the original todos example is in the Redux repo, we start by copying the Redux "todos" source code to a fresh Create-React-App project, and adding Prettier to the project to help make sure the code is formatted consistently. There's also a [jsconfig.json](https://code.visualstudio.com/docs/languages/jsconfig) file to enable us to use "absolute import paths" that start from the `/src` folder.
+Como o exemplo de todos original está no repositório Redux, começamos copiando o código-fonte "todos" do Redux para um novo projeto Create-React-App e adicionando Prettier ao projeto para ajudar a garantir que o código seja formatado de forma consistente. Há também um arquivo [jsconfig.json](https://code.visualstudio.com/docs/languages/jsconfig) para nos permitir usar "caminhos de importação absolutos" que começam na pasta `/src`.
 
 > - [Initial commit](https://github.com/reduxjs/rtk-convert-todos-example/commit/a8e0a9a9d77b9dcd9e881079e7cca449084ca7b1).
 > - [Add jsconfig.json to support absolute imports](https://github.com/reduxjs/rtk-convert-todos-example/commit/b866e205b9ebece84367f11d2faabc557bd08e23)
 
-In the Basic Tutorial, we just linked to Redux Toolkit as an individual script tag. But, in a typical application, you need to add RTK as a package dependency in your project. This can be done with either the NPM or Yarn package managers:
+No tutorial básico, acabamos de criar um link para o Redux Toolkit como uma tag de script individual. Mas, em um aplicativo típico, você precisa adicionar RTK como uma dependência de pacote em seu projeto. Isso pode ser feito com os gerenciadores de pacotes NPM ou Yarn:
 
 ```bash
-# If you're using NPM:
+# Se você estiver usando o NPM:
 npm install @reduxjs/toolkit
 
-# Or for Yarn:
+# Ou com Yarn:
 yarn add @reduxjs/toolkit
 ```
 
 Once that's complete, you should add and commit the modified `package.json` file and the "lock file" from your package manager (`package-lock.json` for NPM, or `yarn.lock` for Yarn).
+Depois de concluído, você deve adicionar e confirmar o arquivo `package.json` modificado e o "arquivo lock" do seu gerenciador de pacotes (`package-lock.json` para NPM, ou `yarn.lock` para Yarn).
 
-> - [Add Redux Toolkit](https://github.com/reduxjs/rtk-convert-todos-example/commit/c3f47aeaecf855561e4db9d452b928f1b8b6c016)
+> - [Adicionar Redux Toolkit](https://github.com/reduxjs/rtk-convert-todos-example/commit/c3f47aeaecf855561e4db9d452b928f1b8b6c016)
 
-With that done, we can start to work on the code.
+Feito isso, podemos começar a trabalhar no código.
 
-### Converting the Store to Use `configureStore`
+### Convertendo a store para usar `configureStore`
 
-Just like with the "counter" example, we can replace the plain Redux `createStore` function with RTK's `configureStore`. This will automatically set up the Redux DevTools Extension for us.
+Assim como no exemplo do "contador", podemos substituir a função simples do Redux `createStore` pelo` configureStore` do RTK. Isso configurará automaticamente a extensão Redux DevTools para nós.
 
-The changes here are simple. We update `src/index.js` to import `configureStore` instead of `createStore`, and replace the function call. Remember that `configureStore` takes an options object as a parameter with named fields, so instead of passing `rootReducer` directly as the first parameter, we pass it as an object field named `reducer`:
+As mudanças aqui são simples. Atualizamos `src/index.js` para importar `configureStore` em vez da `createStore`, e substituímos a chamada da função. Lembre-se de que `configureStore` recebe um objeto de opções como um parâmetro com campos nomeados, então em vez de passar `rootReducer` diretamente como o primeiro parâmetro, nós o passamos como um campo de objeto chamado `reducer`:
 
-> - [Convert store setup to use configureStore](https://github.com/reduxjs/rtk-convert-todos-example/commit/cdfc15edbd82beda9ef0521aa191574b6cc7695a)
+> - [Converter a store para usar configureStore](https://github.com/reduxjs/rtk-convert-todos-example/commit/cdfc15edbd82beda9ef0521aa191574b6cc7695a)
 
 ```diff {3-4,9-12}
 import React from "react";
@@ -83,25 +84,25 @@ import rootReducer from "./reducers";
 +});
 ```
 
-**Note that we're still using the same root reducer function that's already in the application, and a Redux store is still being created. All that's changed is the store is automatically set up with tools to aid you in development.**
+**Observe que ainda estamos usando a mesma função de redutor de raiz que já está no aplicativo e uma Redux store ainda está sendo criada. Tudo o que mudou é que a sotre é configurada automaticamente com ferramentas para ajudá-lo no desenvolvimento.**
 
-If you have [the Redux DevTools browser extension](https://github.com/zalmoxisus/redux-devtools-extension) installed, you should now be able to see the current state if you start the application in development mode and open the DevTools Extension. It should look like this:
+Se você tiver [a extensão do navegador Redux DevTools](https://github.com/zalmoxisus/redux-devtools-extension) instalada, você agora deve ser capaz de ver o estado atual se iniciar o aplicativo no modo de desenvolvimento e abrir a Extensão DevTools. Algo assim:
 
 ![Redux DevTools Extension screenshot showing initial state](/assets/tutorials/intermediate/int-tut-01-redux-devtools.png)
 
-## Creating the Todos Slice
+## Criando o Todos Slice
 
-The first big step for rewriting the app is to convert the todos logic into a new "slice".
+A primeira grande etapa para reescrever o aplicativo é converter a lógica Todos em um novo "slice".
 
-### Understanding Slices
+### Entendendo Slices
 
-Right now, the todos code is split into two parts. The reducer logic is in `reducers/todos.js`, while the action creators are in `actions/index.js`. In a larger app, we might even see the action type constants in their own file, like `constants/todos.js`, so they can be reused in both places.
+No momento, o código todos está dividido em duas partes. A lógica do reducer está em `reducers/todos.js`, enquanto os action creators estão em `actions/index.js`. Em um aplicativo maior, podemos até ver as constantes de tipo de action em seu próprio arquivo, como `constants/todos.js`, para que possam ser reutilizadas em ambos os lugares.
 
-We _could_ replace those using RTK's [`createReducer`](../api/createReducer.mdx) and [`createAction`](../api/createAction.mdx) functions. However, the RTK [`createSlice` function](../api/createSlice.mdx) allows us to consolidate that logic in one place. It uses `createReducer` and `createAction` internally, so **in most apps, you won't need to use them yourself - `createSlice` is all you need**.
+Nós _podemos_ substituir aqueles que usam as funções [`createReducer`](../api/createReducer.mdx) e [`createAction`](../api/createAction.mdx). No entanto, a função do RTK [`createSlice`](../api/createSlice.mdx) nos permite consolidar essa lógica em um só lugar. Ele usa `createReducer` e `createAction` internamente, então **na maioria dos aplicativos, você não precisa usá-los - `createSlice` é tudo que você precisa**.
 
-You may be wondering, "what is a 'slice', anyway?". A normal Redux application has a JS object at the top of its state tree, and that object is the result of calling the Redux [`combineReducers` function](https://redux.js.org/api/combinereducers) to join multiple reducer functions into one larger "root reducer". **We refer to one key/value section of that object as a "slice", and we use the term ["slice reducer"](https://redux.js.org/recipes/structuring-reducers/splitting-reducer-logic) to describe the reducer function responsible for updating that slice of the state**.
+Você pode estar se perguntando, "o que é um 'slice', afinal?". Uma aplicação Redux normal tem um objeto JS no topo de sua árvore de estado, e esse objeto é o resultado da chamada da função Redux [`combineReducers`](https://redux.js.org/api/combinereducers) para juntar múltiplos o reducer funciona em um "reducer raiz" maior. **Referimo-nos a uma seção de chave/valor desse objeto como "slice" e usamos o termo ["reducer slice"](https://redux.js.org/recipes/structuring-reducers/splitting-reducer-logic) para descrever a função reducer responsável por atualizar aquela slice (fatia) do estado**.
 
-In this app, the root reducer looks like:
+Neste aplicativo, o reducer raiz se parece com:
 
 ```js
 import todos from './todos'
@@ -113,11 +114,11 @@ export default combineReducers({
 })
 ```
 
-So, the combined state looks like `{todos: [], visibilityFilter: "SHOW_ALL"}`. `state.todos` is a "slice", and the `todos` reducer function is a "slice reducer".
+Portanto, o estado combinado se parece com `{todos: [], visibilityFilter:" SHOW_ALL"}`. `state.todos` é uma "slice", e a função reducer `todos` é um "slice reducer".
 
-### Examining the Original Todos Reducer
+### Examinando o reducer de todos original
 
-The original todos reducer logic looks like this:
+A lógica do reducer todos original se parece com isto:
 
 ```js
 const todos = (state = [], action) => {
@@ -143,7 +144,7 @@ const todos = (state = [], action) => {
 export default todos
 ```
 
-We can see that it handles three cases:
+Podemos ver que ele lida com três casos:
 
 - It adds a new todo by copying the existing `state` array and adding a new todo entry at the end
 - It handles toggling a todo entry by copying the existing array using `state.map()`, copies and replaces the todo object that needs to be updated, and leaves all other todo entries alone.
@@ -151,7 +152,7 @@ We can see that it handles three cases:
 
 It also initializes the state with a default value of `[]`, and does a default export of the reducer function.
 
-### Writing the Slice Reducer
+### Escrevendo o slice reducer
 
 We can do the same work with `createSlice`, but we can do it in a simpler way.
 

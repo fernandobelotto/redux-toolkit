@@ -9,45 +9,44 @@ hide_title: true
 
 ## Propósito
 
-The **Redux Toolkit** package is intended to be the standard way to write Redux logic. It was originally created to help address three common concerns about Redux:
+O pacote **Redux Toolkit** pretende ser a forma padrão de escrever lógica Redux. Ele foi originalmente criado para ajudar a resolver três preocupações comuns sobre o Redux:
 
-- "Configuring a Redux store is too complicated"
-- "I have to add a lot of packages to get Redux to do anything useful"
-- "Redux requires too much boilerplate code"
+- "Configurar uma Redux store é muito complicado"
+- "Tenho que adicionar muitos pacotes para que o Redux faça algo útil"
+- "Redux requer muito código boilerplate"
 
-We can't solve every use case, but in the spirit of [`create-react-app`](https://github.com/facebook/create-react-app) and [`apollo-boost`](https://dev-blog.apollodata.com/zero-config-graphql-state-management-27b1f1b3c2c3), we can try to provide some tools that abstract over the setup process and handle the most common use cases, as well as include some useful utilities that will let the user simplify their application code.
+Não podemos resolver todos os casos de uso, mas no espírito de [`create-react-app`](https://github.com/facebook/create-react-app) e [` apollo-boost`](https://dev-blog.apollodata.com/zero-config-graphql-state-management-27b1f1b3c2c3), podemos tentar fornecer algumas ferramentas que abstraem o processo de configuração e lidam com os casos de uso mais comuns, bem como incluem alguns utilitários úteis que permitirão ao usuário simplificar o código do aplicativo.
 
-Because of that, this package is deliberately limited in scope. It does _not_ address concepts like "reusable encapsulated Redux modules", data caching, folder or file structures, managing entity relationships in the store, and so on.
+Por causa disso, este pacote é deliberadamente limitado em escopo. Ele _não_ aborda conceitos como "módulos Redux encapsulados reutilizáveis", armazenamento em cache de dados, estruturas de pastas ou arquivos, gerenciamento de relacionamentos de entidades na store e assim por diante.
 
-That said, **these tools should be beneficial to all Redux users**. Whether you're a brand new Redux user setting up your
-first project, or an experienced user who wants to simplify an existing application, **Redux Toolkit** can help
-you make your Redux code better.
+Dito isso, **essas ferramentas devem ser benéficas para todos os usuários do Redux**. Quer você seja um novo usuário do Redux configurando seu primeiro projeto ou um usuário experiente que deseja simplificar um aplicativo existente, o **Redux Toolkit** pode ajudá-lo a tornar seu código Redux melhor.
 
-## What's Included
+## O que está incluído
 
-Redux Toolkit includes these APIs:
+O Redux Toolkit inclui estas APIs:
 
-- [`configureStore()`](../api/configureStore.mdx): wraps `createStore` to provide simplified configuration options and good defaults. It can automatically combine your slice reducers, adds whatever Redux middleware you supply, includes `redux-thunk` by default, and enables use of the Redux DevTools Extension.
-- [`createReducer()`](../api/createReducer.mdx): that lets you supply a lookup table of action types to case reducer functions, rather than writing switch statements. In addition, it automatically uses the [`immer` library](https://github.com/immerjs/immer) to let you write simpler immutable updates with normal mutative code, like `state.todos[3].completed = true`.
-- [`createAction()`](../api/createAction.mdx): generates an action creator function for the given action type string. The function itself has `toString()` defined, so that it can be used in place of the type constant.
-- [`createSlice()`](../api/createSlice.mdx): accepts an object of reducer functions, a slice name, and an initial state value, and automatically generates a slice reducer with corresponding action creators and action types.
-- [`createAsyncThunk`](../api/createAsyncThunk.mdx): accepts an action type string and a function that returns a promise, and generates a thunk that dispatches `pending/fulfilled/rejected` action types based on that promise
-- [`createEntityAdapter`](../api/createEntityAdapter.mdx): generates a set of reusable reducers and selectors to manage normalized data in the store
-- The [`createSelector` utility](../api/createSelector.mdx) from the [Reselect](https://github.com/reduxjs/reselect) library, re-exported for ease of use.
+- [`configureStore()`](../api/configureStore.mdx): envolve o `createStore` para fornecer opções de configuração simplificadas e bons padrões. Ele pode combinar automaticamente seus redutores de slice, adiciona qualquer middleware Redux que você fornecer, inclui `redux-thunk` por padrão e permite o uso da extensão Redux DevTools.
+- [`createReducer()`](../api/createReducer.mdx): que permite fornecer uma tabela de pesquisa de tipos de actions para funções reducers de caso, em vez de escrever instruções switch. Além disso, ele usa automaticamente a [biblioteca `immer`](https://github.com/immerjs/immer) para permitir que você escreva atualizações imutáveis ​​mais simples com código mutativo normal, como `state.todos[3].completed = true`.
+- [`createAction()`](../api/createAction.mdx): gera uma função action creator para a string de tipo de action fornecida. A própria função tem `toString()` definido, para que possa ser usada no lugar da constante de tipo.
+- [`createSlice()`](../api/createSlice.mdx): aceita um objeto de funções reducers, um nome de slice e um valor de estado inicial, e gera automaticamente um reducer de slice com action creators e tipos de action correspondentes.
+- [`createAsyncThunk`](../api/createAsyncThunk.mdx): aceita uma string de tipo de action e uma função que retorna uma promessa e gera um thunk que despacha action types `pendente/cumprida/rejeitada` com base nessa promessa
+- [`createEntityAdapter`](../api/createEntityAdapter.mdx): gera um conjunto de reducers e selectors reutilizáveis ​​para gerenciar dados normalizados na store
+- O utilitário [`createSelector`](../api/createSelector.mdx) da biblioteca [Reselect](https://github.com/reduxjs/reselect), reexportado para facilidade de uso.
 
-## Installation
+## Instalação
 
-### Using Create React App
+### Usando Create React App
 
 The recommended way to start new apps with React and Redux Toolkit is by using the [official Redux+JS template](https://github.com/reduxjs/cra-template-redux) for [Create React App](https://github.com/facebook/create-react-app), which takes advantage of React Redux's integration with React components.
+A maneira recomendada de iniciar novos aplicativos com React e Redux Toolkit é usando o [modelo oficial Redux + JS](https://github.com/reduxjs/cra-template-redux) para [Create React App](https://github.com/facebook/create-react-app), que aproveita a integração do React Redux com os componentes do React.
 
 ```sh
 npx create-react-app my-app --template redux
 ```
 
-### An Existing App
+### Em um aplicativo existente
 
-Redux Toolkit is available as a package on NPM for use with a module bundler or in a Node application:
+O Redux Toolkit está disponível como um pacote no NPM para uso com um empacotador de módulo ou em um aplicativo Node:
 
 ```bash
 # NPM
@@ -57,11 +56,12 @@ npm install @reduxjs/toolkit
 yarn add @reduxjs/toolkit
 ```
 
-It is also available as a precompiled UMD package that defines a `window.RTK` global variable.
-The UMD package can be used as a [`<script>` tag](https://unpkg.com/@reduxjs/toolkit/dist/redux-toolkit.umd.js) directly.
+Também está disponível como um pacote UMD pré-compilado que define uma variável global `window.RTK`.
+O pacote UMD pode ser usado como uma [`<script>` tag](https://unpkg.com/@reduxjs/toolkit/dist/redux-toolkit.umd.js) diretamente.
 
-## Help and Discussion
+## Ajuda e discussão
 
-The **[#redux channel](https://discord.gg/reactiflux)** of the **[Reactiflux Discord community](http://www.reactiflux.com)** is our official resource for all questions related to learning and using Redux. Reactiflux is a great place to hang out, ask questions, and learn - come join us!
+O **[canal #redux](https://discord.gg/reactiflux)** da **[comunidade Reactiflux no Discord](http://www.reactiflux.com)** é nosso recurso oficial para todas as questões relacionado a aprender e usar Redux. Reactiflux é um ótimo lugar para entrar, fazer perguntas e aprender - junte-se a nós!
 
 You can also ask questions on [Stack Overflow](https://stackoverflow.com) using the **[#redux tag](https://stackoverflow.com/questions/tagged/redux)**.
+Você também pode fazer perguntas no [Stack Overflow](https://stackoverflow.com) usando a **[tag #redux](https://stackoverflow.com/questions/tagged/redux)**.

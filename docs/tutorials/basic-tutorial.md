@@ -5,13 +5,13 @@ sidebar_label: Basic Tutorial
 hide_title: true
 ---
 
-# Basic Tutorial: Introducing Redux Toolkit
+# Tutorial básico: Apresentando a Redux Toolkit
 
-Welcome to Redux Toolkit ! This tutorial will show you the basic functions that are included with Redux Toolkit (also known as "RTK" for short).
+Bem-vindo ao Redux Toolkit! Este tutorial mostrará as funções básicas incluídas no Redux Toolkit (também conhecido como "RTK" para abreviação).
 
-This tutorial assumes that you are already familiar with the concepts of the core [Redux](https://redux.js.org) library, as well as how to use it with [React](https://reactjs.org). If you aren't, please take some time to read through the [Redux docs](https://redux.js.org) and [React-Redux docs](https://react-redux.js.org) first, as the explanations here focus on how RTK usage differs from "typical" Redux code.
+Este tutorial presume que você já esteja familiarizado com os conceitos da biblioteca central [Redux](https://redux.js.org), bem como como usá-la com o [React](https://reactjs.org). Se não estiver, reserve um tempo para ler os [documentos do Redux](https://redux.js.org) e os [documentos do React-Redux](https://react-redux.js.org) primeiro, já que as explicações aqui se concentram em como o uso do RTK difere do código Redux "típico".
 
-## Introduction: Writing a Counter Application
+## Introdução: Escrevendo um aplicativo contador
 
 We'll start by looking at the smallest Redux example: a simple counter application.
 

@@ -456,13 +456,13 @@ Os componentes `TodoList` e `VisibleTodoList` têm problemas semelhantes: eles e
 
 E com isso, agora devemos ser capazes de adicionar e alternar todos novamente, mas usando nosso novo slice de todos!
 
-## Creating and Using the Filters Slice
+## Criando e usando o slice de filtros
 
-Now that we've created the todos slice and hooked it up to the UI, we can do the same for the filter selection logic as well.
+Agora que criamos o slice todos e o conectamos à IU, podemos fazer o mesmo para a lógica de seleção de filtro.
 
-### Writing the Filters Slice
+### Escrevendo o slice de filtros
 
-The filter logic is really simple. We have one action, which sets the current filter value by returning what's in the action. Here's the whole slice:
+A lógica do filtro é muito simples. Temos uma action, que define o valor do filtro atual, retornando o que está na action. Aqui está a fatia inteira:
 
 > - [Add the filters slice](https://github.com/reduxjs/rtk-convert-todos-example/commit/b77f4155e3b45bce24d0d0ef6e2f7b0c3bd11ee1)
 

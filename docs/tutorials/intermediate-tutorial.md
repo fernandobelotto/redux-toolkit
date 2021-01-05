@@ -393,9 +393,9 @@ Já que estamos nisso, existem alguns outros problemas com como o componente `Ad
 
 Em segundo lugar, o componente conectado está recebendo `dispatch` como prop. Novamente, isso funciona, mas a maneira normal de usar connect é [passar as funções do action creator para `connect`](https://react-redux.js.org/using-react-redux/connect-mapdispatch) e, em seguida, despacha as action chamando as funções que foram passadas como props.
 
-Since we've got this component open, we can fix those issues too. Here's what the final version looks like:
+Uma vez que temos esse componente aberto, podemos corrigir esses problemas também. Esta é a aparência da versão final:
 
-> - [Update AddTodo to dispatch the new action type](https://github.com/reduxjs/rtk-convert-todos-example/commit/d7082409ebaa113b74f6989bf70ee09600f37d0b)
+> - [Atualizar AddTodo para despachar o novo tipo de action](https://github.com/reduxjs/rtk-convert-todos-example/commit/d7082409ebaa113b74f6989bf70ee09600f37d0b)
 
 ```js
 import React, { useState } from 'react'

@@ -364,11 +364,11 @@ describe('addTodo', () => {
 
 ### Atualizando o reducer raiz
 
-We have a shiny new todos reducer function, but it isn't hooked up to anything yet.
+Temos uma função reducer totalmente nova e brilhante, mas ela ainda não está conectada a nada.
 
-The first step is to go update our root reducer to use the reducer from the todos slice instead of the original reducer. We just need to change the import statement in `reducers/index.js`:
+A primeira etapa é atualizar nosso redutor de raiz para usar o redutor da fatia todos em vez do redutor original. Precisamos apenas alterar a instrução de importação em `reducers/index.js`:
 
-> - [Use the todos slice reducer](https://github.com/reduxjs/rtk-convert-todos-example/commit/7b6e005377c856d7415e328387188260330ebae4)
+> - [Use o slice reducer todos](https://github.com/reduxjs/rtk-convert-todos-example/commit/7b6e005377c856d7415e328387188260330ebae4)
 
 ```diff
 import { combineReducers } from 'redux'
@@ -383,11 +383,11 @@ export default combineReducers({
 })
 ```
 
-While we could have kept the imported function named as `todos` so that we can use the object literal shorthand with `combineReducers`, it's a little more clear if we name the imported function `todosReducer` and define the field as `todos: todosReducer`.
+Embora pudéssemos ter mantido a função importada nomeada como `todos` para que possamos usar a abreviação literal do objeto com `combineReducers`, é um pouco mais claro se nomearmos a função importada como `todosReducer` e definir o campo como `todos: todosReducer`.
 
-### Updating the Add Todo Component
+### Atualizando o componente Add Todo
 
-If we reload the app, we should still see that `state.todos` is an empty array. But, if we click on "Add Todo", nothing will happen. We're still dispatching actions whose type is `'ADD_TODO'`, while our todos slice is looking for an action type of `'todos/addTodo'`. We need to import the correct action creator and use it in the `AddTodo.js` file.
+Se recarregarmos o aplicativo, ainda devemos ver que `state.todos` é um array vazio. Mas, se clicarmos em "Adicionar Todo", nada acontecerá. Ainda estamos despachando ações cujo tipo é `'ADD_TODO'`, enquanto nosso slice de todos está procurando por um tipo de ação `'todos/addTodo'`. Precisamos importar o action creator correta e usá-lo no arquivo `AddTodo.js`.
 
 While we're at it, there are a couple of other problems with how the `AddTodo` component is written. First, it's currently using a React "callback ref" to read the current text value from the input when you click "Add Todo". This works, but the standard "React way" to handle form fields is with the "controlled inputs" pattern, where the current field value is stored in the component's state.
 

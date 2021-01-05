@@ -439,7 +439,7 @@ Finalmente, usamos a forma ["abreviação de objeto" de `mapDispatch`](https://r
 
 ### Atualizando a lista de todos
 
-The `TodoList` and `VisibleTodoList` components have similar issues: they're using the older `toggleTodo` action creator, and the `connect` setup isn't using the "object shorthand" form of `mapDispatch`. We can fix both of those.
+Os componentes `TodoList` e `VisibleTodoList` têm problemas semelhantes: eles estão usando o antigo action creator `toggleTodo`, e a configuração `connect` não está usando a forma "abreviação de objeto" de `mapDispatch`. Podemos consertar ambos.
 
 > - [Update TodoList to dispatch the new toggle action type](https://github.com/reduxjs/rtk-convert-todos-example/commit/b47b2124d6a28386b7461bccb9216682a81edb3e)
 

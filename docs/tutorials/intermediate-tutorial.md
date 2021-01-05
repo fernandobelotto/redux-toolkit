@@ -389,7 +389,7 @@ Embora pudéssemos ter mantido a função importada nomeada como `todos` para qu
 
 Se recarregarmos o aplicativo, ainda devemos ver que `state.todos` é um array vazio. Mas, se clicarmos em "Adicionar Todo", nada acontecerá. Ainda estamos despachando ações cujo tipo é `'ADD_TODO'`, enquanto nosso slice de todos está procurando por um tipo de ação `'todos/addTodo'`. Precisamos importar o action creator correta e usá-lo no arquivo `AddTodo.js`.
 
-While we're at it, there are a couple of other problems with how the `AddTodo` component is written. First, it's currently using a React "callback ref" to read the current text value from the input when you click "Add Todo". This works, but the standard "React way" to handle form fields is with the "controlled inputs" pattern, where the current field value is stored in the component's state.
+Já que estamos nisso, existem alguns outros problemas com como o componente `AddTodo` é escrito. Primeiro, ele está usando uma "referência de retorno" do React para ler o valor de texto atual da entrada quando você clica em "Add Todo". Isso funciona, mas a "forma de reação" padrão para lidar com os campos do formulário é com o padrão de "entradas controladas", onde o valor do campo atual é armazenado no estado do componente.
 
 Second, the connected component is getting `dispatch` as a prop. Again, this works, but the normal way to use connect is to [pass action creator functions to `connect`](https://react-redux.js.org/using-react-redux/connect-mapdispatch), and then dispatch the actions by calling the functions that were passed in as props.
 

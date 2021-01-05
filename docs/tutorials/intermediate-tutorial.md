@@ -1,7 +1,7 @@
 ---
 id: intermediate-tutorial
-title: Intermediate Tutorial
-sidebar_label: Intermediate Tutorial
+title: Tutorial intermediário
+sidebar_label: Tutorial intermediário
 hide_title: true
 ---
 
@@ -27,11 +27,11 @@ O código-fonte completo para o aplicativo convertido deste tutorial está dispo
 
 Se inspecionarmos [o código-fonte de exemplo "todos" atual](https://github.com/reduxjs/redux/tree/9c9a4d2a1c62c9dbddcbb05488f8bd77d24c81de/examples/todos/src), podemos observar algumas coisas:
 
-- The [`todos` reducer function](https://github.com/reduxjs/redux/blob/9c9a4d2a1c62c9dbddcbb05488f8bd77d24c81de/examples/todos/src/reducers/todos.js) is doing immutable updates "by hand", by copying nested JS objects and arrays
-- The [`actions` file](https://github.com/reduxjs/redux/blob/9c9a4d2a1c62c9dbddcbb05488f8bd77d24c81de/examples/todos/src/actions/index.js) has hand-written action creator functions, and the action type strings are being duplicated between the actions file and the reducer files
-- The code is laid out using a ["folder-by-type" structure](https://redux.js.org/faq/code-structure#what-should-my-file-structure-look-like-how-should-i-group-my-action-creators-and-reducers-in-my-project-where-should-my-selectors-go), with separate files for `actions` and `reducers`
-- The React components are written using a strict version of the ["container/presentational" pattern](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0), where [the "presentational" components are in one folder](https://github.com/reduxjs/redux/tree/9c9a4d2a1c62c9dbddcbb05488f8bd77d24c81de/examples/todos/src/components), and the [Redux "container" connection definitions are in a different folder](https://github.com/reduxjs/redux/tree/9c9a4d2a1c62c9dbddcbb05488f8bd77d24c81de/examples/todos/src/containers)
-- Some of the code isn't following some of the recommended Redux "best practices" patterns. We'll look at some specific examples as we go through this tutorial.
+- A função reducer [`todos`](https://github.com/reduxjs/redux/blob/9c9a4d2a1c62c9dbddcbb05488f8bd77d24c81de/examples/todos/src/reducers/todos.js) está fazendo atualizações imutáveis "à mão", copiando objetos aninhados e arrays
+- O [arquivo `actions`](https://github.com/reduxjs/redux/blob/9c9a4d2a1c62c9dbddcbb05488f8bd77d24c81de/examples/todos/src/actions/index.js) tem funções action creators escritas à mão e as strings de tipo de action estão sendo duplicados entre o arquivo de actions e os arquivos de reducers
+- O código é apresentado usando uma [estrutura "pasta por tipo"](https://redux.js.org/faq/code-structure#what-should-my-file-structure-look-like-how-should-i-group-my-action-creators-and-reducers-in-my-project-where-should-my-selectors-go), com arquivos separados para `actions` e `reducers`
+- Os componentes React são escritos usando uma versão estrita do padrão ["container/presentational"](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0), onde [os componentes "presentational" estão em uma pasta](https://github.com/reduxjs/redux/tree/9c9a4d2a1c62c9dbddcbb05488f8bd77d24c81de/examples/todos/src/components), e as definições de conexão [Redux "contêiner" estão em uma pasta diferente](https://github.com/reduxjs/redux/tree/9c9a4d2a1c62c9dbddcbb05488f8bd77d24c81de/examples/todos/src/containers)
+- Parte do código não está seguindo alguns dos padrões de "melhores práticas" do Redux que recomendados. Veremos alguns exemplos específicos ao longo deste tutorial.
 
 Por um lado, este é um pequeno aplicativo de exemplo. O objetivo é ilustrar os fundamentos do uso real de React e Redux juntos, e não necessariamente ser usado como "a maneira certa" de fazer as coisas em um aplicativo de produção em escala real. Por outro lado, a maioria das pessoas usará os padrões que vêem em documentos e exemplos e, definitivamente, há espaço para melhorias aqui.
 
@@ -41,8 +41,8 @@ Por um lado, este é um pequeno aplicativo de exemplo. O objetivo é ilustrar os
 
 Como o exemplo de todos original está no repositório Redux, começamos copiando o código-fonte "todos" do Redux para um novo projeto Create-React-App e adicionando Prettier ao projeto para ajudar a garantir que o código seja formatado de forma consistente. Há também um arquivo [jsconfig.json](https://code.visualstudio.com/docs/languages/jsconfig) para nos permitir usar "caminhos de importação absolutos" que começam na pasta `/src`.
 
-> - [Initial commit](https://github.com/reduxjs/rtk-convert-todos-example/commit/a8e0a9a9d77b9dcd9e881079e7cca449084ca7b1).
-> - [Add jsconfig.json to support absolute imports](https://github.com/reduxjs/rtk-convert-todos-example/commit/b866e205b9ebece84367f11d2faabc557bd08e23)
+> - [Commit inicial](https://github.com/reduxjs/rtk-convert-todos-example/commit/a8e0a9a9d77b9dcd9e881079e7cca449084ca7b1).
+> - [Adicione jsconfig.json para suportar importações absolutas](https://github.com/reduxjs/rtk-convert-todos-example/commit/b866e205b9ebece84367f11d2faabc557bd08e23)
 
 No tutorial básico, acabamos de criar um link para o Redux Toolkit como uma tag de script individual. Mas, em um aplicativo típico, você precisa adicionar RTK como uma dependência de pacote em seu projeto. Isso pode ser feito com os gerenciadores de pacotes NPM ou Yarn:
 
@@ -53,8 +53,6 @@ npm install @reduxjs/toolkit
 # Ou com Yarn:
 yarn add @reduxjs/toolkit
 ```
-
-Once that's complete, you should add and commit the modified `package.json` file and the "lock file" from your package manager (`package-lock.json` for NPM, or `yarn.lock` for Yarn).
 Depois de concluído, você deve adicionar e confirmar o arquivo `package.json` modificado e o "arquivo lock" do seu gerenciador de pacotes (`package-lock.json` para NPM, ou `yarn.lock` para Yarn).
 
 > - [Adicionar Redux Toolkit](https://github.com/reduxjs/rtk-convert-todos-example/commit/c3f47aeaecf855561e4db9d452b928f1b8b6c016)
@@ -146,21 +144,21 @@ export default todos
 
 Podemos ver que ele lida com três casos:
 
-- It adds a new todo by copying the existing `state` array and adding a new todo entry at the end
-- It handles toggling a todo entry by copying the existing array using `state.map()`, copies and replaces the todo object that needs to be updated, and leaves all other todo entries alone.
-- It responds to all other actions by returning the existing state (effectively saying "I don't care about that action").
+- Adiciona um novo todo copiando o array `state` existente e adicionando uma nova entrada de todo no final
+- Ele lida com alternar uma entrada de todo copiando o array existente usando `state.map()`, copia e substitui o objeto de todos que precisa ser atualizado e deixa todas as outras entradas de todos sozinhas.
+- Ele responde a todas as outras actions retornando o estado existente (efetivamente dizendo "Não me importo com essa action").
 
-It also initializes the state with a default value of `[]`, and does a default export of the reducer function.
+Ele também inicializa o estado com um valor padrão de `[]` e faz uma exportação padrão da função reducer.
 
 ### Escrevendo o slice reducer
 
-We can do the same work with `createSlice`, but we can do it in a simpler way.
+Podemos fazer o mesmo trabalho com `createSlice`, mas podemos fazê-lo de uma forma mais simples.
 
-We'll start by adding a new file called `/features/todos/todosSlice.js`. Note that while it doesn't matter how you actually structure your folders and files, we've found that [a "feature folder" approach](https://redux.js.org/faq/code-structure#what-should-my-file-structure-look-like-how-should-i-group-my-action-creators-and-reducers-in-my-project-where-should-my-selectors-go) usually works better for most applications. The file name is also entirely up to you, but a convention of `someFeatureSlice.js` is reasonable to use.
+Começaremos adicionando um novo arquivo chamado `/features/todos/todosSlice.js`. Observe que, embora não importe como você realmente estrutura suas pastas e arquivos, descobrimos que [uma abordagem de "pasta de recursos"](https://redux.js.org/faq/code-structure#what-should-my-file-structure-look-like-how-should-i-group-my-action-creators-and-reducers-in-my-project-where-should-my-selectors-go) geralmente funciona melhor para a maioria formulários. O nome do arquivo também depende inteiramente de você, mas é razoável usar uma convenção de `someFeatureSlice.js`.
 
-In this file, we'll add the following logic:
+Neste arquivo, adicionaremos a seguinte lógica:
 
-> - [Add an initial todos slice](https://github.com/reduxjs/rtk-convert-todos-example/commit/48ce059dbb0fce1b961631821534fbcb766d3471)
+> - [Adicionar um slice inicial de todos](https://github.com/reduxjs/rtk-convert-todos-example/commit/48ce059dbb0fce1b961631821534fbcb766d3471)
 
 ```js
 import { createSlice } from '@reduxjs/toolkit'
@@ -187,32 +185,32 @@ export const { addTodo, toggleTodo } = todosSlice.actions
 export default todosSlice.reducer
 ```
 
-#### `createSlice` Options
+#### Opções de `createSlice`
 
-Let's break down what this does:
+Vamos analisar o que isso faz:
 
 - `createSlice` takes an options object as its argument, with these options:
   - `name`: a string that is used as the prefix for generated action types
   - `initialState`: the initial state value for the reducer
   - `reducers`: an object, where the keys will become action type strings, and the functions are reducers that will be run when that action type is dispatched. (These are sometimes referred to as ["case reducers"](https://redux.js.org/recipes/structuring-reducers/splitting-reducer-logic), because they're similar to a `case` in a `switch` statement)
 
-So, the `addTodo` case reducer function will be run when an action with the type `"todos/addTodo"` is dispatched.
+Assim, a função redutora de caso `addTodo` será executada quando uma action com o tipo `"todos/addTodo"` for despachada.
 
-There's no `default` handler here. The reducer generated by `createSlice` will automatically handle all other action types by returning the current state, so we don't have to list that ourselves.
+Não há manipulador `default` aqui. O reducer gerado por `createSlice` irá lidar automaticamente com todos os outros tipos de action, retornando o estado atual, então não temos que listar isso nós mesmos.
 
-#### "Mutable" Update Logic
+#### Atualizar Lógica "Mutável"
 
-Notice that the `addTodo` reducer is calling `state.push()`. Normally, this is bad, because [the `array.push()` function mutates the existing array](https://doesitmutate.xyz/#push), and **[Redux reducers must _never_ mutate state!](https://redux.js.org/basics/reducers#handling-actions)**.
+Observe que o redutor `addTodo` está chamando `state.push()`. Normalmente, isso é ruim, porque [a função `array.push()` altera o array existente](https://doesitmutate.xyz/#push) e **[Redux redutores devem _nunca_ sofrer mutação!](Https://redux.js.org/basics/reducers#handling-actions)**.
 
-However, `createSlice` and `createReducer` wrap your function with [`produce` from the Immer library](https://github.com/immerjs/immer). **This means you can write code that "mutates" the state inside the reducer, and Immer will safely return a correct immutably updated result.**
+No entanto, `createSlice` e `createReducer` envolvem sua função com [`produce` da biblioteca Immer](https://github.com/immerjs/immer). **Isso significa que você pode escrever um código que "modifique" o estado dentro do reducer, e o Immer retornará com segurança um resultado correto atualizado imutavelmente.**
 
-Similarly, `toggleTodo` doesn't map over the array or copy the matching todo object. Instead, it just finds the matching todo object, and then mutates it by assigning `todo.completed = !todo.completed`. Again, Immer knows this object was updated, and makes copies of both the todo object and the containing array.
+Da mesma forma, `toggleTodo` não mapeia o array nem copia o objeto de todos correspondente. Em vez disso, ele apenas encontra o objeto de todo correspondente e o altera atribuindo `todo.completed = !Todo.completed`. Novamente, o Immer sabe que esse objeto foi atualizado e faz cópias do objeto todo e do array que o contém.
 
-Normal immutable update logic tends to obscure what you're actually trying to do because of all of the extra copying that has to happen. Here, the intent should be much more clear: we're adding an item to the end of an array, and we're modifying a field in a todo entry.
+A lógica normal de atualização imutável tende a obscurecer o que você está realmente tentando fazer por causa de todas as cópias extras que precisam acontecer. Aqui, a intenção deve ser muito mais clara: estamos adicionando um item ao final de uma matriz e modificando um campo em uma entrada de tarefas.
 
-#### Exporting the Slice Functions
+#### Exportando as funções do Slice
 
-`createSlice` returns an object that looks like this:
+`createSlice` retorna um objeto parecido com este:
 
 ```js
 {
@@ -229,31 +227,31 @@ Normal immutable update logic tends to obscure what you're actually trying to do
 }
 ```
 
-**Notice that it auto-generated the appropriate action creator functions _and_ action types for each of our reducers - we don't have to write those by hand!**
+**Observe que ele gerou automaticamente as funções actions creators apropriadas _e_ tipos de action para cada um de nossos reducers - não precisamos escrevê-los à mão!**
 
-We'll need to use the action creators and the reducer in other files, so at a minimum we would need to export the slice object. However, we can use a Redux community code convention called [the "ducks" pattern](https://github.com/erikras/ducks-modular-redux). Simply put, **it suggests that you should put all your action creators and reducers in one file, do named exports of the action creators, and a default export of the reducer function**.
+Precisaremos usar os action creators e o reducer em outros arquivos, então, no mínimo, precisaríamos exportar o objeto slice. No entanto, podemos usar uma convenção de código da comunidade Redux chamada [o padrão "ducks"](https://github.com/erikras/ducks-modular-redux). Simplificando, **ele sugere que você deve colocar todos os seus action creators e reducers em um arquivo, fazer exportações nomeadas dos action creators e uma exportação padrão da função reducer**.
 
-Thanks to `createSlice`, we already have our action creators and the reducer right here in one file. All we have to do is export them separately, and our todos slice file now matches the common "ducks" pattern.
+Graças ao `createSlice`, já temos nossos action creators e reducer bem aqui em um arquivo. Tudo o que temos a fazer é exportá-los separadamente e nosso arquivo de slice agora corresponde ao padrão comum "ducks".
 
-#### Working with Action Payloads
+#### Trabalhando com payloads
 
-Speaking of the action creators, let's go back and re-examine the reducer logic for a minute.
+Falando dos action creators, vamos voltar e reexaminar a lógica do reducer por um minuto.
 
-By default, the action creators from the RTK `createAction` function only accept one argument. That argument, whatever it is, is put into the action object as a field called `payload`.
+Por padrão, os action creators da função RTK `createAction` aceitam apenas um argumento. Esse argumento, seja ele qual for, é colocado no objeto de action como um campo chamado `payload`.
 
-There's nothing special about the field `action.payload` by itself. Redux doesn't know or care about that name. But, like "ducks", the name `payload` comes from another Redux community convention called ["Flux Standard Actions"](https://github.com/redux-utilities/flux-standard-action).
+Não há nada de especial sobre o campo `action.payload` por si só. Redux não conhece ou se preocupa com esse nome. Mas, como "ducks", o nome `payload` vem de outra convenção da comunidade Redux chamada ["Flux Standard Actions"](https://github.com/redux-utilities/flux-standard-action).
 
-Actions usually need to include some extra data along with the `type` field. The original Redux code for `addTodo` has an action object that looks like `{type, id, text}`. **The FSA convention suggests that rather than having data fields with random names directly in the action object, you should always put your data inside a field named `payload`**.
+As actions geralmente precisam incluir alguns dados extras junto com o campo `type`. O código Redux original para `addTodo` tem um objeto de action que se parece com `{type, id, text}`. **A convenção FSA sugere que em vez de ter campos de dados com nomes aleatórios diretamente no objeto de action, você deve sempre colocar seus dados dentro de um campo denominado `payload`**.
 
-It's up to the reducer to establish what it thinks `payload` should be for each action type, and whatever code dispatches the action needs to pass in values that match that expectation. If only one value is needed, you could potentially use that as the whole `payload` value directly. More commonly, you'd need to pass in multiple values, in which case `payload` should be an object containing those values.
+Cabe ao reudcer estabelecer o que ele pensa que a `payload` deve ser para cada tipo de action, e qualquer código que despache a action precisa passar valores que correspondam a essa expectativa. Se apenas um valor for necessário, você poderia usá-lo diretamente como o valor `payload` inteiro. Mais comumente, você precisa passar vários valores; nesse caso, `payload` deve ser um objeto contendo esses valores.
 
-In our todos slice, `addTodo` needs two fields, `id` and `text`, so we put those into an object as `payload`. For `toggleTodo`, the only value we need is the `id` of the todo being changed. We could have made that the `payload`, but I prefer always having `payload` be an object, so I made it `action.payload.id` instead.
+Em nosso slice todos, `addTodo` precisa de dois campos, `id` e `text`, então os colocamos em um objeto como `payload`. Para `toggleTodo`, o único valor que precisamos é o `id` do todo sendo alterado. Poderíamos ter feito isso como `payload`, mas eu prefiro sempre ter `payload` como um objeto, então eu fiz `action.payload.id`.
 
-(As a sneak peek: there _is_ a way to customize how action object payloads are created. We'll look at that later in this tutorial, or you can look through [the `createAction` API docs](../api/createAction.mdx) for an explanation.)
+(Como uma prévia: existe _sim_ uma maneira de personalizar como os payloads do objeto de action são criados. Veremos isso mais tarde neste tutorial, ou você pode consultar [os documentos da API `createAction`](../api/createAction.mdx) para obter uma explicação.)
 
-### Updating the Todos Tests
+### Atualizando os Testes Todos
 
-The original todos reducer has a tests file with it. We can port those over to work with our todos slice, and verify that they both work the same way.
+O redutor de todos original tem um arquivo de testes com ele. Podemos transferi-los para trabalhar com nosso slice de todos e verificar se ambos funcionam da mesma maneira.
 
 The first step is to copy `reducers/todos.spec.js` over to `features/todos/todosSlice.spec.js`, and change the import path to read the reducer from the slice file.
 

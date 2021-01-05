@@ -253,28 +253,28 @@ Em nosso slice todos, `addTodo` precisa de dois campos, `id` e `text`, então os
 
 O redutor de todos original tem um arquivo de testes com ele. Podemos transferi-los para trabalhar com nosso slice de todos e verificar se ambos funcionam da mesma maneira.
 
-The first step is to copy `reducers/todos.spec.js` over to `features/todos/todosSlice.spec.js`, and change the import path to read the reducer from the slice file.
+O primeiro passo é copiar `reducers/todos.spec.js` para `features/todos/todosSlice.spec.js`, e alterar o caminho de importação para ler o reducer do arquivo slice.
 
-> - [Copy tests to todos slice](https://github.com/reduxjs/rtk-convert-todos-example/commit/b603312ddf55899e8a75522d407c40474948ae0b)
+> - [Copie os testes para todos slice](https://github.com/reduxjs/rtk-convert-todos-example/commit/b603312ddf55899e8a75522d407c40474948ae0b)
 
-Once that is done, we need to update the tests to match how RTK works.
+Feito isso, precisamos atualizar os testes para corresponder ao funcionamento do RTK.
 
-The first issue is that the test file hardcodes action types like `'ADD_TODO'`. RTK's action types look like `'todos/addTodo'`. We can reference that by also importing the action creators from the todos slice, and replacing the original type constants in the test with `addTodo.type`.
+O primeiro problema é que o arquivo de teste codifica os tipos de action como `'ADD_TODO'`. Os tipos de action do RTK se parecem com `'todos/addTodo'`. Podemos fazer referência a isso importando também os action creators da slice todos e substituindo as constantes de tipo original no teste por `addTodo.type`.
 
-The other problem is that the action objects in the tests look like `{type, id, text}`, whereas RTK always puts those extra values inside `action.payload`. So, we need to modify the test actions to match that.
+O outro problema é que os objetos de action nos testes se parecem com `{type, id, text}`, enquanto o RTK sempre coloca esses valores extras dentro de `action.payload`. Portanto, precisamos modificar as actions de teste para corresponder a isso.
 
-(We really _could_ just replace all the inline action objects in the test with calls like `addTodo({id : 0, text: "Buy milk"})`, but this is a simpler set of changes to show for now.)
+(Nós realmente _podemos_ apenas substituir todos os objetos de action inline no teste por chamadas como `addTodo ({id: 0, text:" Buy milk "})`, mas este é um conjunto mais simples de alterações para mostrar por enquanto.)
 
-> - [Port the todos tests to work with the todos slice](https://github.com/reduxjs/rtk-convert-todos-example/commit/39dbbf37bd4c559db956c8291bbd0bf1135546bb)
+> - [Transfira os testes todos para trabalhar com o slice todos](https://github.com/reduxjs/rtk-convert-todos-example/commit/39dbbf37bd4c559db956c8291bbd0bf1135546bb)
 
-An example of the changes would be:
+Um exemplo das mudanças seria:
 
 ```diff
-// Change the imports to get the action creators
+// Altere as importações para obter os action creators
 -import todos from './todosSlice'
 +import todos, { addTodo, toggleTodo } from './todosSlice'
 
-// later, in a test:
+// depois, em um teste:
   it('should handle ADD_TODO', () => {
     expect(
       todos([], {
@@ -290,11 +290,11 @@ An example of the changes would be:
     ).toEqual([
 ```
 
-After those changes, all the tests in `todosSlice.spec.js` should pass, proving that our new RTK slice reducer works exactly the same as the original hand-written reducer!
+Após essas mudanças, todos os testes em `todosSlice.spec.js` devem passar, provando que nosso novo reducer de slice RTK funciona exatamente da mesma forma que o reducer original escrito à mão!
 
-### Implementing Todo IDs
+### Implementando IDs de Todo
 
-In the original code, each newly added todo gets an ID value from an incrementing number:
+No código original, cada todo recém-adicionada obtém um valor de ID (um número crescente):
 
 ```js
 let nextTodoId = 0
@@ -304,14 +304,13 @@ export const addTodo = text => ({
   text
 })
 ```
+No momento, nosso slice de todos não faz isso, porque o action creator `addTodo` é gerado automaticamente para nós.
 
-Right now, our todos slice doesn't do that, because the `addTodo` action creator is automatically generated for us.
+Nós _podemos_ adicionar esse comportamento para exigir que qualquer código que envie o add todo deva passar um novo ID, como `addTodo ({id: 1, text: "Buy milk"})`, mas isso seria irritante. Por que o chamador deve rastrear esse valor? Além disso, e se houver várias partes do aplicativo que precisariam despachar essa action? Seria melhor encapsular essa lógica no action creator.
 
-We _could_ add that behavior for requiring that whatever code dispatches the add todo should have to pass in a new ID, like `addTodo({id: 1, text: "Buy milk"})`, but that would be annoying. Why should the caller have to track that value? Also, what if there are multiple parts of the app that would need to dispatch that action? It would be better to encapsulate that logic in the action creator.
+O RTK permite que você personalize como o campo `payload` é criado em seus objetos de action. Se você estiver usando `createAction` por si só, pode passar um "prepare callback" como o segundo argumento. Esta seria a aparência:
 
-RTK allows you to customize how the `payload` field is created in your action objects. If you are using `createAction` by itself, you can pass a "prepare callback" as the second argument. Here's what this would look like:
-
-> - [Implement addTodo ID generation](https://github.com/reduxjs/rtk-convert-todos-example/commit/0c9e3b721c209d368d23a70cf8faca8f308ff8df)
+> - [Implementar geração de ID addTodo](https://github.com/reduxjs/rtk-convert-todos-example/commit/0c9e3b721c209d368d23a70cf8faca8f308ff8df)
 
 ```js
 let nextTodoId = 0
@@ -323,9 +322,9 @@ export const addTodo = createAction('ADD_TODO', text => {
 })
 ```
 
-**Note that the "prepare callback" _must_ return an object with a field called `payload` inside!** Otherwise, the action's payload will be undefined. It _may_ also include a field called `meta`, which can be used to include extra additional metadata related to the action.
+**Observe que o "preparar callback" _deve_ retornar um objeto com um campo chamado `payload` dentro!** Caso contrário, o payload da action será undefined. Ele _pode_ também incluir um campo chamado `meta`, que pode ser usado para incluir metadados adicionais adicionais relacionados à action.
 
-If you're using `createSlice`, it automatically calls `createAction` for you. If you need to customize the payload there, you can do so by passing an object containing `reducer` and `prepare` functions to the `reducers` object, instead of just the reducer function by itself:
+Se você estiver usando `createSlice`, ele chama automaticamente `createAction` para você. Se precisar personalizar a carga útil lá, você pode fazer isso passando um objeto contendo as funções `reducer` e `prepare` para o objeto `reducers`, em vez de apenas a função reducer em si:
 
 ```js
 let nextTodoId = 0
@@ -347,7 +346,7 @@ const todosSlice = createSlice({
 }
 ```
 
-We can add an additional test that confirms this works:
+Podemos adicionar um teste adicional que confirma que isso funciona:
 
 ```js
 describe('addTodo', () => {
@@ -361,9 +360,9 @@ describe('addTodo', () => {
 })
 ```
 
-## Using the New Todos Slice
+## Usando o Novo Slice de Todos
 
-### Updating the Root Reducer
+### Atualizando o reducer raiz
 
 We have a shiny new todos reducer function, but it isn't hooked up to anything yet.
 

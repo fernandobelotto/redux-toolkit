@@ -441,7 +441,7 @@ Finalmente, usamos a forma ["abreviação de objeto" de `mapDispatch`](https://r
 
 Os componentes `TodoList` e `VisibleTodoList` têm problemas semelhantes: eles estão usando o antigo action creator `toggleTodo`, e a configuração `connect` não está usando a forma "abreviação de objeto" de `mapDispatch`. Podemos consertar ambos.
 
-> - [Update TodoList to dispatch the new toggle action type](https://github.com/reduxjs/rtk-convert-todos-example/commit/b47b2124d6a28386b7461bccb9216682a81edb3e)
+> - [Atualize TodoList para despachar o novo tipo de action de toggle](https://github.com/reduxjs/rtk-convert-todos-example/commit/b47b2124d6a28386b7461bccb9216682a81edb3e)
 
 ```diff
 // VisibleTodoList.js
@@ -454,7 +454,7 @@ Os componentes `TodoList` e `VisibleTodoList` têm problemas semelhantes: eles e
 +const mapDispatchToProps = { toggleTodo }
 ```
 
-And with that, we should now be able to add and toggle todos again, but using our new todos slice!
+E com isso, agora devemos ser capazes de adicionar e alternar todos novamente, mas usando nosso novo slice de todos!
 
 ## Creating and Using the Filters Slice
 

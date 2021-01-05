@@ -431,7 +431,7 @@ const AddTodo = ({ addTodo }) => {
 export default connect(null, mapDispatch)(AddTodo)
 ```
 
-We start by importing the correct `addTodo` action creator from our todos slice.
+Começamos importando o action creator `addTodo` correto de nosso slice de todos.
 
 The input is now being handled as a standard "controlled input", with the text value being stored in the component's state. We can use that state text value in the form's submit handler.
 

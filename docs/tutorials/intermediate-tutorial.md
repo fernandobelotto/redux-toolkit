@@ -391,7 +391,7 @@ Se recarregarmos o aplicativo, ainda devemos ver que `state.todos` é um array v
 
 Já que estamos nisso, existem alguns outros problemas com como o componente `AddTodo` é escrito. Primeiro, ele está usando uma "referência de retorno" do React para ler o valor de texto atual da entrada quando você clica em "Add Todo". Isso funciona, mas a "forma de reação" padrão para lidar com os campos do formulário é com o padrão de "entradas controladas", onde o valor do campo atual é armazenado no estado do componente.
 
-Second, the connected component is getting `dispatch` as a prop. Again, this works, but the normal way to use connect is to [pass action creator functions to `connect`](https://react-redux.js.org/using-react-redux/connect-mapdispatch), and then dispatch the actions by calling the functions that were passed in as props.
+Em segundo lugar, o componente conectado está recebendo `dispatch` como prop. Novamente, isso funciona, mas a maneira normal de usar connect é [passar as funções do action creator para `connect`](https://react-redux.js.org/using-react-redux/connect-mapdispatch) e, em seguida, despacha as action chamando as funções que foram passadas como props.
 
 Since we've got this component open, we can fix those issues too. Here's what the final version looks like:
 

@@ -194,13 +194,13 @@ Vamos analisar o que isso faz:
   - `initialState`: the initial state value for the reducer
   - `reducers`: an object, where the keys will become action type strings, and the functions are reducers that will be run when that action type is dispatched. (These are sometimes referred to as ["case reducers"](https://redux.js.org/recipes/structuring-reducers/splitting-reducer-logic), because they're similar to a `case` in a `switch` statement)
 
-Assim, a função redutora de caso `addTodo` será executada quando uma action com o tipo `"todos/addTodo"` for despachada.
+Assim, a função reducer de caso `addTodo` será executada quando uma action com o tipo `"todos/addTodo"` for despachada.
 
 Não há manipulador `default` aqui. O reducer gerado por `createSlice` irá lidar automaticamente com todos os outros tipos de action, retornando o estado atual, então não temos que listar isso nós mesmos.
 
 #### Atualizar Lógica "Mutável"
 
-Observe que o redutor `addTodo` está chamando `state.push()`. Normalmente, isso é ruim, porque [a função `array.push()` altera o array existente](https://doesitmutate.xyz/#push) e **[Redux redutores devem _nunca_ sofrer mutação!](Https://redux.js.org/basics/reducers#handling-actions)**.
+Observe que o reducer `addTodo` está chamando `state.push()`. Normalmente, isso é ruim, porque [a função `array.push()` altera o array existente](https://doesitmutate.xyz/#push) e **[Redux reducers devem _nunca_ sofrer mutação!](Https://redux.js.org/basics/reducers#handling-actions)**.
 
 No entanto, `createSlice` e `createReducer` envolvem sua função com [`produce` da biblioteca Immer](https://github.com/immerjs/immer). **Isso significa que você pode escrever um código que "modifique" o estado dentro do reducer, e o Immer retornará com segurança um resultado correto atualizado imutavelmente.**
 
@@ -251,7 +251,7 @@ Em nosso slice todos, `addTodo` precisa de dois campos, `id` e `text`, então os
 
 ### Atualizando os Testes Todos
 
-O redutor de todos original tem um arquivo de testes com ele. Podemos transferi-los para trabalhar com nosso slice de todos e verificar se ambos funcionam da mesma maneira.
+O reducer de todos original tem um arquivo de testes com ele. Podemos transferi-los para trabalhar com nosso slice de todos e verificar se ambos funcionam da mesma maneira.
 
 O primeiro passo é copiar `reducers/todos.spec.js` para `features/todos/todosSlice.spec.js`, e alterar o caminho de importação para ler o reducer do arquivo slice.
 
@@ -366,7 +366,7 @@ describe('addTodo', () => {
 
 Temos uma função reducer totalmente nova e brilhante, mas ela ainda não está conectada a nada.
 
-A primeira etapa é atualizar nosso redutor de raiz para usar o redutor da fatia todos em vez do redutor original. Precisamos apenas alterar a instrução de importação em `reducers/index.js`:
+A primeira etapa é atualizar nosso reducer root para usar o slice reducer todos em vez do reducer original. Precisamos apenas alterar a instrução de importação em `reducers/index.js`:
 
 > - [Use o slice reducer todos](https://github.com/reduxjs/rtk-convert-todos-example/commit/7b6e005377c856d7415e328387188260330ebae4)
 
@@ -490,13 +490,13 @@ export const { setVisibilityFilter } = filtersSlice.actions
 export default filtersSlice.reducer
 ```
 
-We've copied over the `VisibilityFilters` enum object that was originally in `actions/index.js`. The slice code just creates the one reducer, we export the action creator and reducer, and we're done.
+Copiamos o objeto enum `VisibilityFilters` que estava originalmente em `actions/index.js`. O código do slice apenas cria um reducer, exportamos o action creator e o reducer e pronto.
 
-### Using the Filters Slice
+### Usando a Slice de filtros
 
-As with the todos reducer, we need to import and add the visibility reducer to our root reducer:
+Assim como com o reducer todos, precisamos importar e adicionar o reducer de visibilidade ao nosso reducer root:
 
-> - [Use the filters slice reducer](https://github.com/reduxjs/rtk-convert-todos-example/commit/623c47b1987914a1d90142824892686ec76c20a1)
+> - [Use o slice reducer de filtros](https://github.com/reduxjs/rtk-convert-todos-example/commit/623c47b1987914a1d90142824892686ec76c20a1)
 
 ```diff
 import todosReducer from 'features/todos/todosSlice'
@@ -510,7 +510,7 @@ export default combineReducers({
 })
 ```
 
-From there, we need to dispatch the `setVisibilityFilter` action when the user clicks on the buttons. First, for consistency, we should update `VisibleTodoList.js` and `Footer.js` to use the `VisibilityFilter` enum that's exported from the filter slice file, instead of the one from the actions file.
+A partir daí, precisamos despachar a action `setVisibilityFilter` quando o usuário clicar nos botões. Primeiro, para consistência, devemos atualizar `VisibleTodoList.js` e `Footer.js` para usar o enum `VisibilityFilter` que é exportado do arquivo do slice de filtro, em vez daquele do arquivo de actions.
 
 From there, the link components will take just a bit more work. `FilterLink` is currently creating new functions that capture the current value of `ownProps.filter`, so that `Link` is just getting a function called `onClick`. While that's a valid way to do it, for consistency we'd like to continue using the object shorthand form of `mapDispatch`, and modify `Link` to pass the filter value in when it dispatches the action.
 

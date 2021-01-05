@@ -437,7 +437,7 @@ A entrada agora está sendo tratada como uma "entrada controlada" padrão, com o
 
 Finalmente, usamos a forma ["abreviação de objeto" de `mapDispatch`](https://react-redux.js.org/using-react-redux/connect-mapdispatch#defining-mapdispatchtoprops-as-an-object) para simplifique a passagem dos action creator para `connect`. A versão "vinculada" de `addTodo` é passada para o componente como um prop e despachará a action assim que a chamarmos.
 
-### Updating the Todo List
+### Atualizando a lista de todos
 
 The `TodoList` and `VisibleTodoList` components have similar issues: they're using the older `toggleTodo` action creator, and the `connect` setup isn't using the "object shorthand" form of `mapDispatch`. We can fix both of those.
 

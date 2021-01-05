@@ -433,9 +433,9 @@ export default connect(null, mapDispatch)(AddTodo)
 
 Começamos importando o action creator `addTodo` correto de nosso slice de todos.
 
-The input is now being handled as a standard "controlled input", with the text value being stored in the component's state. We can use that state text value in the form's submit handler.
+A entrada agora está sendo tratada como uma "entrada controlada" padrão, com o valor do texto sendo armazenado no estado do componente. Podemos usar esse valor de texto de estado no manipulador de envio do formulário.
 
-Finally, we use the ["object shorthand" form of `mapDispatch`](https://react-redux.js.org/using-react-redux/connect-mapdispatch#defining-mapdispatchtoprops-as-an-object) to simplify passing the action creators to `connect`. The "bound" version of `addTodo` is passed in to the component as a prop, and it will dispatch the action as soon as we call it.
+Finalmente, usamos a forma ["abreviação de objeto" de `mapDispatch`](https://react-redux.js.org/using-react-redux/connect-mapdispatch#defining-mapdispatchtoprops-as-an-object) para simplifique a passagem dos action creator para `connect`. A versão "vinculada" de `addTodo` é passada para o componente como um prop e despachará a action assim que a chamarmos.
 
 ### Updating the Todo List
 

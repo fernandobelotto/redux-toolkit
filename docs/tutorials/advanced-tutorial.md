@@ -19,7 +19,7 @@ No processo, veremos alguns exemplos de técnicas do TypeScript que você pode u
 
 > **Nota**: Este não é um tutorial completo sobre como usar o TypeScript em geral ou com Redux especificamente, e os exemplos mostrados aqui não tentam atingir 100% de segurança de tipo completa. Para obter mais informações, consulte os recursos da comunidade, como o [React TypeScript Cheatsheet](https://github.com/typescript-cheatsheets/react) e o [React / Redux TypeScript Guide](https://github.com/piotrwitek/react-redux-typescript-guide).
 >
-> In addition, this tutorial does not mean you _must_ convert your React app logic completely to Redux. [It's up to you to decide what state should live in React components, and what should be in Redux](https://redux.js.org/faq/organizing-state#do-i-have-to-put-all-my-state-into-redux-should-i-ever-use-reacts-setstate). This is just an example of how you _could_ convert logic to use Redux if you choose to.
+> Além disso, este tutorial não significa que você _deve_ converter a lógica do aplicativo React completamente para Redux. [Cabe a você decidir qual estado deve viver nos componentes React e o que deve estar no Redux](https://redux.js.org/faq/organizing-state#do-i-have-to-put-all-my-state-into-redux-should-i-ever-use-reats-setstate). Este é apenas um exemplo de como você _pode_ converter a lógica para usar o Redux, se desejar.
 
 The complete source code for the converted application from this tutorial is available at [github.com/reduxjs/rtk-github-issues-example](https://github.com/reduxjs/rtk-github-issues-example). We'll be walking through the conversion process as shown in this repo's history. Links to meaningful individual commits will be highlighted in quote blocks, like this:
 

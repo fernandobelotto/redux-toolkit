@@ -27,11 +27,11 @@ O código-fonte completo para o aplicativo convertido deste tutorial está dispo
 
 ## Revisando o exemplo de aplicativo inicial
 
-The example application for this tutorial is a Github Issues viewer app. It allows the user to enter the names of a Github org and repository, fetch the current list of open issues, page through the issues list, and view the contents and comments of a specific issue.
+O aplicativo de exemplo para este tutorial é um aplicativo visualizador de isseus no Github. Ele permite ao usuário inserir os nomes de uma organização Github e repositório, buscar a lista atual de issues abertos, percorrer a lista de isseus e visualizar o conteúdo e comentários de uma issue específica.
 
-The starting commit for this application is a plain React implementation that uses function components with hooks for state and side effects like data fetching. The code is already written in TypeScript, and the styling is done via CSS Modules.
+O commit inicial para este aplicativo é uma implementação simples do React que usa componentes de função com hooks para o estado e efeitos colaterais, como busca de dados. O código já está escrito em TypeScript e o estilo é feito por meio de módulos CSS.
 
-Let's start by viewing the original plain React app in action:
+Vamos começar vendo o aplicativo React original em ação:
 
 <iframe src="https://codesandbox.io/embed/rsk-github-issues-example-8jf6d?fontsize=14&hidenavigation=1&theme=dark&view=preview"
      style={{ width: '100%', height: '500px', border: 0, borderRadius: '4px', overflow: 'hidden' }}
@@ -40,9 +40,9 @@ Let's start by viewing the original plain React app in action:
      sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
 ></iframe>
 
-### React Codebase Source Overview
+### Visão geral da codebase
 
-The codebase is already laid out in a "feature folder" structure, The main pieces are:
+A base de código já está disposta em uma estrutura de "pasta de recursos". As peças principais são:
 
 - `/api`: fetching functions and TS types for the Github Issues API
 - `/app`: main `<App>` component
@@ -53,17 +53,17 @@ The codebase is already laid out in a "feature folder" structure, The main piece
   - `/repoSearch`: components for the Repo Search form
 - `/utils`: various string utility functions
 
-## Setting Up the Redux Store
+## Configurando a Redux Store
 
-Since this app doesn't yet use Redux at all, the first step is to install Redux Toolkit and React-Redux. Since this is a TypeScript app, we'll also need to add `@types/react-redux` as well. Add those packages to the project via either Yarn or NPM.
+Como este aplicativo ainda não usa Redux, a primeira etapa é instalar o Redux Toolkit e o React-Redux. Como este é um aplicativo TypeScript, também precisaremos adicionar `@types/react-redux`. Adicione esses pacotes ao projeto via Yarn ou NPM.
 
-> - [Add Redux Toolkit and React-Redux packages](https://github.com/reduxjs/rtk-github-issues-example/compare/Add_Redux_Toolkit_and_React-Redux_packages~1..reduxjs:Add_Redux_Toolkit_and_React-Redux_packages)
+> - [Adicione os pacotes Redux Toolkit e React-Redux](https://github.com/reduxjs/rtk-github-issues-example/compare/Add_Redux_Toolkit_and_React-Redux_packages~1..reduxjs:Add_Redux_Toolkit_and_React-Redux_packages)
 
-Next, we need to set up the usual pieces: a root reducer function, the Redux store, and the `<Provider>` to make that store available to our component tree.
+Em seguida, precisamos configurar as peças usuais: uma função reducer raiz, a Redux store e o `<Provider>` para disponibilizar essa store para nossa árvore de componentes.
 
-In the process, we're going to set up "Hot Module Replacement" for our app. That way, whenever we make a change to the reducer logic or the component tree, Create-React-App will rebuild the app and swap the changed code into our running app, without having to completely refresh the page.
+No processo, vamos configurar o "Hot Module Replacement" para nosso aplicativo. Dessa forma, sempre que fizermos uma alteração na lógica do reducer ou na árvore de componentes, Create-React-App reconstruirá o aplicativo e trocará o código alterado em nosso aplicativo em execução, sem ter que atualizar completamente a página.
 
-#### Creating the Root Reducer
+#### Criando o reducer raiz
 
 > - [Add store and root reducer with reducer HMR](https://github.com/reduxjs/rtk-github-issues-example/compare/Add_store_and_root_reducer_with_reducer_HMR~1..reduxjs:Add_store_and_root_reducer_with_reducer_HMR)
 

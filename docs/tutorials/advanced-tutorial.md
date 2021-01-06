@@ -21,11 +21,11 @@ No processo, veremos alguns exemplos de técnicas do TypeScript que você pode u
 >
 > Além disso, este tutorial não significa que você _deve_ converter a lógica do aplicativo React completamente para Redux. [Cabe a você decidir qual estado deve viver nos componentes React e o que deve estar no Redux](https://redux.js.org/faq/organizing-state#do-i-have-to-put-all-my-state-into-redux-should-i-ever-use-reats-setstate). Este é apenas um exemplo de como você _pode_ converter a lógica para usar o Redux, se desejar.
 
-The complete source code for the converted application from this tutorial is available at [github.com/reduxjs/rtk-github-issues-example](https://github.com/reduxjs/rtk-github-issues-example). We'll be walking through the conversion process as shown in this repo's history. Links to meaningful individual commits will be highlighted in quote blocks, like this:
+O código-fonte completo para o aplicativo convertido deste tutorial está disponível em [github.com/reduxjs/rtk-github-issues-example](https://github.com/reduxjs/rtk-github-issues-example). Percorreremos o processo de conversão, conforme mostrado no histórico deste repo. Links para commits individuais significativos serão destacados em blocos de citações, como este:
 
 > - Commit message here
 
-## Reviewing the Starting Example Application
+## Revisando o exemplo de aplicativo inicial
 
 The example application for this tutorial is a Github Issues viewer app. It allows the user to enter the names of a Github org and repository, fetch the current list of open issues, page through the issues list, and view the contents and comments of a specific issue.
 

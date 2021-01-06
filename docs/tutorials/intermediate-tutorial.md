@@ -512,9 +512,9 @@ export default combineReducers({
 
 A partir daí, precisamos despachar a action `setVisibilityFilter` quando o usuário clicar nos botões. Primeiro, para consistência, devemos atualizar `VisibleTodoList.js` e `Footer.js` para usar o enum `VisibilityFilter` que é exportado do arquivo do slice de filtro, em vez daquele do arquivo de actions.
 
-From there, the link components will take just a bit more work. `FilterLink` is currently creating new functions that capture the current value of `ownProps.filter`, so that `Link` is just getting a function called `onClick`. While that's a valid way to do it, for consistency we'd like to continue using the object shorthand form of `mapDispatch`, and modify `Link` to pass the filter value in when it dispatches the action.
+A partir daí, os componentes do link darão um pouco mais de trabalho. `FilterLink` está atualmente criando novas funções que capturam o valor atual de `ownProps.filter`, de modo que `Link` está apenas obtendo uma função chamada `onClick`. Embora seja uma maneira válida de fazer isso, para consistência, gostaríamos de continuar usando a forma abreviada de objeto de `mapDispatch` e modificar` Link` para passar o valor do filtro quando ele despacha a action.
 
-> - [Use the new filters action in the UI](https://github.com/reduxjs/rtk-convert-todos-example/commit/776b39088384513ff68af41039fe5fc5188fe8fb)
+> - [Use a nova action de filter na UI](https://github.com/reduxjs/rtk-convert-todos-example/commit/776b39088384513ff68af41039fe5fc5188fe8fb)
 
 ```diff
 // FilterLink.js
@@ -556,15 +556,15 @@ Link.propTypes = {
 export default Link
 ```
 
-Again, note that most of this doesn't have to do with RTK specifically, but it's good to try to consistently use some of the recommended best practices in this example code.
+Novamente, observe que a maior parte disso não tem a ver com RTK especificamente, mas é bom tentar usar de forma consistente algumas das melhores práticas recomendadas neste código de exemplo.
 
-With that done, we should be able to add a couple todos, toggle the state of some of them, and then switch the filters to change the display list.
+Feito isso, devemos ser capazes de adicionar algumas todos, alternar o estado de algumas delas e, em seguida, alternar os filtros para alterar a lista de exibição.
 
-## Optimizing Todo Filtering
+## Otimizando a filtragem de todo
 
-The `VisibleTodoList` component currently uses a function called `getVisibleTodos` to do the work of filtering the todos array for display. This is a "selector function", as described in the Redux docs page on [Computing Derived Data](https://redux.js.org/recipes/computing-derived-data). It encapsulates the process of reading values from the Redux store and extracting part or all of those values for use.
+O componente `VisibleTodoList` atualmente usa uma função chamada `getVisibleTodos` para fazer o trabalho de filtrar o array de todos para exibição. Esta é uma "função selector", conforme descrito na página Redux docs em [Computing Derived Data](https://redux.js.org/recipes/computing-derived-data). Ele encapsula o processo de leitura de valores da Redux store e extração de parte ou todos esses valores para uso.
 
-However, the code as currently written has a problem. If the filter is set to `SHOW_COMPLETED` or `SHOW_ACTIVE`, it will _always_ return a new array _every_ time it is called. Since it's being used in a `mapState` function, that means it will return a new array reference when _any_ action is dispatched.
+No entanto, o código como escrito atualmente tem um problema. Se o filtro for definido como `SHOW_COMPLETED` ou `SHOW_ACTIVE`, ele _sempre_ retornará um novo array toda vez que for chamado. Já que está sendo usado em uma função `mapState`, isso significa que ele retornará uma nova referência de array quando _qualquer_ action for despachada.
 
 In this tiny todo example app, that isn't a problem. The only actions we have involve altering the todos list or filtering it, anyway. But, in a real app, many other actions will be dispatched. Imagine if this todo app had a counter in it, and `"INCREMENT"` was dispatched while the list is filtered. We would create a new list, and the `TodoList` would have to re-render even though nothing changed.
 

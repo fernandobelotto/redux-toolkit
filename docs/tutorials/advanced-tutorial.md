@@ -7,7 +7,7 @@ hide_title: true
 
 # Tutorial avançado: Redux Toolkit na prática
 
-In the [Intermediate Tutorial](./intermediate-tutorial.md), you saw how to use Redux Toolkit in a typical basic React app, as well as how to convert some existing plain Redux code to use RTK instead. You also saw how to write "mutative" immutable updates in reducer functions, and how to write a "prepare callback" to generate an action payload.
+No [Tutorial intermediário](./intermediate-tutorial.md), você viu como usar o Redux Toolkit em um aplicativo React básico típico, bem como converter algum código Redux simples existente para usar RTK. Você também viu como escrever atualizações imutáveis ​​"mutativas" em funções redutoras e como escrever um "retorno de chamada de preparação" para gerar uma carga útil de ação.
 
 In this tutorial, you'll see how to use Redux Toolkit as part of a larger "real world" app that is bigger than a todo list example. This tutorial will show several concepts:
 

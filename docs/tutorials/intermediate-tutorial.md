@@ -566,11 +566,11 @@ O componente `VisibleTodoList` atualmente usa uma função chamada `getVisibleTo
 
 No entanto, o código como escrito atualmente tem um problema. Se o filtro for definido como `SHOW_COMPLETED` ou `SHOW_ACTIVE`, ele _sempre_ retornará um novo array toda vez que for chamado. Já que está sendo usado em uma função `mapState`, isso significa que ele retornará uma nova referência de array quando _qualquer_ action for despachada.
 
-In this tiny todo example app, that isn't a problem. The only actions we have involve altering the todos list or filtering it, anyway. But, in a real app, many other actions will be dispatched. Imagine if this todo app had a counter in it, and `"INCREMENT"` was dispatched while the list is filtered. We would create a new list, and the `TodoList` would have to re-render even though nothing changed.
+Neste pequeno aplicativo de exemplo de todos, isso não é um problema. As únicas action que temos envolvem alterar a lista de todos ou filtrá-la, de qualquer maneira. Mas, em um aplicativo real, muitas outras actions serão despachadas. Imagine se este aplicativo de tarefas tivesse um contador e `"INCREMENT"` fosse despachado enquanto a lista era filtrada. Criaríamos uma nova lista e `TodoList` teria que ser renderizado novamente, mesmo que nada mudasse.
 
-While this isn't a real performance issue now, it's worth showing how we can improve the behavior.
+Embora esse não seja um problema real de desempenho agora, vale a pena mostrar como podemos melhorar o comportamento.
 
-Redux apps commonly use a library called [Reselect](https://github.com/reduxjs/reselect), which has a `createSelector` function that lets you define "memoized" selector functions. These memoized selectors only recalculate values if the inputs have actually changed.
+Aplicativos Redux normalmente usam uma biblioteca chamada [Reselect](https://github.com/reduxjs/reselect), que tem uma função `createSelector` que permite definir funções selectors "memoizadas". Esses selectors memoizados apenas recalculam os valores se as entradas foram realmente alteradas.
 
 RTK re-exports the `createSelector` function from Reselect, so we can import that and use it in `VisibleTodoList`.
 

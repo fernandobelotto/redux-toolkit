@@ -675,15 +675,15 @@ Agora, vamos ver a versão final do código em ação!
      sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
 ></iframe>
 
-## Summary
+## Resumo
 
-In this tutorial, you saw:
+Neste tutorial, você viu:
 
-- How to use RTK in a typical React application, including adding the package, writing "slice" files, and dispatching actions from React components
-- How to use "mutable" reducers, prepare action payloads, and write selector functions
-- Some techniques for simplifying React-Redux code, like using the "object shorthand" form of `mapDispatch`
-- Examples of using a "feature folder" structure for organizing your code.
+- Como usar RTK em um aplicativo React típico, incluindo adicionar o pacote, gravar arquivos "slice" e despachar actions de componentes React
+- Como usar reducers "mutáveis", preparar payload de actions e escrever funções seletors
+- Algumas técnicas para simplificar o código React-Redux, como usar a forma "abreviação de objeto" de `mapDispatch`
+- Exemplos de como usar uma estrutura de "pasta de recursos" para organizar seu código.
 
-Hopefully that has helped illustrate how to actually use these methods in practice.
+Esperamos isso ajudou a ilustrar como realmente usar esses métodos na prática.
 
-Next up, the [Advanced Tutorial](./advanced-tutorial.md) looks at how to use RTK in an app that does async data fetching and uses TypeScript.
+A seguir, o [Tutorial avançado](./advanced-tutorial.md) examina como usar RTK em um aplicativo que busca dados assíncronos e usa TypeScript.

@@ -633,16 +633,16 @@ Se executarmos novamente o aplicativo, a lógica de filtragem _deve_ funcionar e
 
 ## Cleanup
 
-That's the end of the actual conversion work. We now have a bunch of action and reducer files that are no longer being used, so we should delete those to clean up the project.
+Esse é o fim do trabalho de conversão. Agora temos vários arquivos de action e reducers que não estão mais sendo usados, portanto, devemos excluí-los para limpar o projeto.
 
-We can safely remove `actions/index.js`, `reducers/todos.js`, `reducers/visibilityFilter.js`, and the associated test files.
+Podemos remover com segurança `actions/index.js`, `reducers/todos.js`, `reducers/visibilityFilter.js` e os arquivos de teste associados.
 
-We can also try completely switching from the "folder-by-type" structure to a "feature folder" structure, by moving all of the component files into the matching feature folders.
+Também podemos tentar mudar completamente da estrutura "pasta por tipo" para uma estrutura de "pasta de recursos", movendo todos os arquivos de componentes para as pastas de recursos correspondentes.
 
-> - [Remove unused action and reducer files](https://github.com/reduxjs/rtk-convert-todos-example/commit/fbc0b965949e082748b8613b734612226ffe9e94)
-> - [Consolidate components into feature folders](https://github.com/reduxjs/rtk-convert-todos-example/commit/138cc162b1cc9c64ab67fae0a1171d07940414e6)
+> - [Remover arquivos de actino e reducers não utilizados](https://github.com/reduxjs/rtk-convert-todos-example/commit/fbc0b965949e082748b8613b734612226ffe9e94)
+> - [Consolidar componentes em pastas de recursos](https://github.com/reduxjs/rtk-convert-todos-example/commit/138cc162b1cc9c64ab67fae0a1171d07940414e6)
 
-If we do that, the final source code structure looks like this:
+Se fizermos isso, a estrutura do código-fonte final ficará assim:
 
 - `/src`
   - `/components`
@@ -664,9 +664,9 @@ If we do that, the final source code structure looks like this:
     - `index.js`
   - `index.js`
 
-Everyone has different preferences on what makes a "maintainable" folder structure, but overall that result looks pretty consistent and easy to follow.
+Todos têm preferências diferentes sobre o que torna uma estrutura de pastas "sustentável", mas no geral esse resultado parece bastante consistente e fácil de seguir.
 
-Now, let's see the final version of the code in action!
+Agora, vamos ver a versão final do código em ação!
 
 <iframe src="https://codesandbox.io/embed/rtk-convert-todos-example-uqqy3?fontsize=14&hidenavigation=1&module=%2Fsrc%2Ffeatures%2Ftodos%2FtodosSlice.js&theme=dark&view=editor"
      style={{ width: '100%', height: '500px', border: 0, borderRadius: '4px', overflow: 'hidden' }}

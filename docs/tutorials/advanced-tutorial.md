@@ -9,11 +9,11 @@ hide_title: true
 
 No [Tutorial intermediário](./intermediate-tutorial.md), você viu como usar o Redux Toolkit em um aplicativo React básico típico, bem como converter algum código Redux simples existente para usar RTK. Você também viu como escrever atualizações imutáveis ​​"mutativas" em funções redutoras e como escrever um "retorno de chamada de preparação" para gerar uma carga útil de ação.
 
-In this tutorial, you'll see how to use Redux Toolkit as part of a larger "real world" app that is bigger than a todo list example. This tutorial will show several concepts:
+Neste tutorial, você verá como usar o Redux Toolkit como parte de um aplicativo maior do "mundo real" que é maior do que um exemplo de lista de tarefas. Este tutorial mostrará vários conceitos:
 
-- How to convert a "plain React" app to use Redux
-- How async logic like data fetching fits into RTK
-- How to use RTK with TypeScript
+- Como converter um aplicativo "simples do React" para usar o Redux
+- Como a lógica assíncrona, como a busca de dados, se encaixa no RTK
+- Como usar RTK com TypeScript
 
 In the process, we'll look at a few examples of TypeScript techniques you can use to improve your code, and we'll see how to use the new [React-Redux hooks APIs](https://react-redux.js.org/api/hooks) as an alternative to [the traditional `connect` API](https://react-redux.js.org/api/connect).
 

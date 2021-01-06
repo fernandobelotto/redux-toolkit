@@ -572,9 +572,9 @@ Embora esse não seja um problema real de desempenho agora, vale a pena mostrar 
 
 Aplicativos Redux normalmente usam uma biblioteca chamada [Reselect](https://github.com/reduxjs/reselect), que tem uma função `createSelector` que permite definir funções selectors "memoizadas". Esses selectors memoizados apenas recalculam os valores se as entradas foram realmente alteradas.
 
-RTK re-exports the `createSelector` function from Reselect, so we can import that and use it in `VisibleTodoList`.
+O RTK reexporta a função `createSelector` de Reselect, para que possamos importá-la e usá-la em `VisibleTodoList`.
 
-> - [Convert visible todos to a memoized selector](https://github.com/reduxjs/rtk-convert-todos-example/commit/4fc943b7111381974f20f74750a114b5e52ce1b2)
+> - [Converter todos visíveis em um selector memoizado](https://github.com/reduxjs/rtk-convert-todos-example/commit/4fc943b7111381974f20f74750a114b5e52ce1b2)
 
 ```diff
 import { connect } from 'react-redux'
@@ -623,13 +623,13 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = { toggleTodo }
 ```
 
-First, we import `createSelector` from RTK, and define a couple one-line selector functions that grab the `todos` and `visibilityFilter` fields from their `state` argument.
+Primeiro, importamos `createSelector` do RTK, e definimos algumas funções selectors de uma linha que pegam os campos `todos` e `visibilityFilter` de seu argumento `state`.
 
-We then call `createSelector`, and pass those two small selector functions in the "input selectors" array. `createSelector` will call those, take the return values, and pass those to the "output selector" we've defined, which can then do the filtering and return the final result.
+Em seguida, chamamos `createSelector` e passamos essas duas pequenas funções de seletor no array "input selector". `createSelector` irá chamá-los, pegar os valores de retorno e passá-los para o "output selector" que definimos, que pode então fazer a filtragem e retornar o resultado final.
 
-There's a couple small changes in how this is defined and used. While you can give selector functions any name you want, `selectX` is a more common naming convention than `getX`. Also, because the input selectors take care of reading the necessary values, we can just call `selectVisibleTodos(state)`, with `state` as the only argument.
+Há algumas pequenas mudanças em como isso é definido e usado. Embora você possa dar às funções selectors qualquer nome que desejar, `selectX` é uma convenção de nomenclatura mais comum do que `getX`. Além disso, como os input selectors se encarregam de ler os valores necessários, podemos apenas chamar `selectVisibleTodos(state)`, com `state` como o único argumento.
 
-If we re-run the app, the filtering logic _should_ work exactly the same as before from what you can see in the UI.
+Se executarmos novamente o aplicativo, a lógica de filtragem _deve_ funcionar exatamente da mesma maneira que antes, pelo que você pode ver na IU.
 
 ## Cleanup
 
